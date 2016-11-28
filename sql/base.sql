@@ -118,10 +118,9 @@ create table ACHAT_PERSONNEL
 -- ============================================================
 create table BENEFICIAIRE
 (
-    ID_BENEFICIAIRE                 NUMBER(3)              not null,
     ID_CONTRAT_MEMBRE               NUMBER(3)              not null,
     ID_ACHAT_PERSONNEL              NUMBER(3)              not null,
-    constraint pk_beneficiaire primary key (ID_BENEFICIAIRE)
+    constraint pk_beneficiaire primary key (ID_CONTRAT_MEMBRE, ID_ACHAT_PERSONNEL)
 );
 
 alter table COLOCATION
