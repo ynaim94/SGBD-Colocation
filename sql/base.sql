@@ -33,6 +33,14 @@ create table COLOCATION
 );
 -- 'Y' = oui, 'N' = non
 
+drop sequence seq_colocation;
+
+create sequence seq_colocation
+minvalue 1
+start with 1
+increment by 1
+cache 10;
+
 -- ============================================================
 --   Table : PERSONNE                                       
 -- ============================================================
@@ -45,6 +53,13 @@ create table PERSONNE
     constraint pk_personne primary key (ID_PERSONNE)
 );
 
+drop sequence seq_personne;
+
+create sequence seq_personne
+minvalue 1
+start with 1
+increment by 1
+cache 10;
 
 -- ============================================================
 --   Table : ACHAT_COLOCATION                                              
@@ -60,6 +75,14 @@ create table ACHAT_COLOCATION
     constraint pk_achat_colocation primary key (ID_ACHAT_COLOCATION)
 );
 
+drop sequence seq_achat_colocation;
+
+create sequence seq_achat_colocation
+minvalue 1
+start with 1
+increment by 1
+cache 10;
+
 -- ============================================================
 --   Table : ABONDEMENT                                              
 -- ============================================================
@@ -72,6 +95,13 @@ create table ABONDEMENT
     constraint pk_abondement primary key (ID_ABONDEMENT)
 );
 
+drop sequence seq_abondement;
+
+create sequence seq_abondement
+minvalue 1
+start with 1
+increment by 1
+cache 10;
 
 -- ============================================================
 --   Table : VERSEMENT                                              
@@ -86,6 +116,13 @@ create table VERSEMENT
     constraint pk_versement primary key (ID_VERSEMENT)
 );
 
+drop sequence seq_versement;
+
+create sequence seq_versement
+minvalue 1
+start with 1
+increment by 1
+cache 10;
 
 -- ============================================================
 --   Table : CONTRAT_MEMBRE
@@ -100,6 +137,13 @@ create table CONTRAT_MEMBRE
     constraint pk_contrat_membre primary key (ID_CONTRAT_MEMBRE)
 );
 
+drop sequence seq_contrat_membre;
+
+create sequence seq_contrat_membre
+minvalue 1
+start with 1
+increment by 1
+cache 10;
 
 -- ============================================================
 --   Table : ACHAT_PERSONNEL                                              
@@ -113,6 +157,14 @@ create table ACHAT_PERSONNEL
     ID_CONTRAT_MEMBRE               NUMBER(3)              not null,
     constraint pk_achat_personnel primary key (ID_ACHAT_PERSONNEL)
 );
+
+drop sequence seq_achat_personnel;
+
+create sequence seq_achat_personnel
+minvalue 1
+start with 1
+increment by 1
+cache 10;
 
 -- ============================================================
 --   Table : BENEFICIAIRE                                              
