@@ -31,6 +31,7 @@ create table COLOCATION
     ID_PERSONNE                     NUMBER(3)              not null,
     constraint pk_colocation primary key (ID_COLOCATION)
 );
+-- 'Y' = oui, 'N' = non
 
 -- ============================================================
 --   Table : PERSONNE                                       
