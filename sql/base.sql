@@ -71,7 +71,7 @@ create table ACHAT_COLOCATION
     DATE_ACHAT_COLOCATION           DATE                   not null,
     MONTANT_ACHAT_COLOCATION        INT                    not null,
     ID_COLOCATION                   NUMBER(3)              not null,
-    ID_CONTRAT_MEMBRE               NUMBER(3)              not null,
+    ID_CONTRAT_MEMBRE               NUMBER(3)              ,
     constraint pk_achat_colocation primary key (ID_ACHAT_COLOCATION)
 );
 

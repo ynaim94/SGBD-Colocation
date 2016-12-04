@@ -36,3 +36,11 @@ values (13, seq_achat_personnel.currval);
 
 insert into BENEFICIAIRE
 values (666, seq_achat_personnel.currval);
+
+-- ajouté un achat_colocation
+-- soit le contrat membre  42 qui fait l'achat et la colocation 666 qui en bénificie
+insert into ACHAT_COLOCATION
+values (seq_colocation.nextval, 'INTITULE', '01-JAN-08', 500, 666, 42);
+
+insert into ACHAT_COLOCATION
+values (seq_colocation.nextval, 'INTITULE', '01-JAN-08', 500, 666, null);
