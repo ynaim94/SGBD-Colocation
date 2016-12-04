@@ -42,5 +42,7 @@ values (666, seq_achat_personnel.currval);
 insert into ACHAT_COLOCATION
 values (seq_colocation.nextval, 'INTITULE', '01-JAN-08', 500, 666, 42);
 
+-- si l'achat se fait avec la cagnionette
 insert into ACHAT_COLOCATION
 values (seq_colocation.nextval, 'INTITULE', '01-JAN-08', 500, 666, null);
+
