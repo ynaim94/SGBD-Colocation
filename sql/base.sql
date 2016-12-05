@@ -25,13 +25,13 @@ drop table VERSEMENT cascade constraints;
 create table COLOCATION
 (
     ID_COLOCATION                   NUMBER(3)              not null,
-    ADRESSE_COLOCATION              CHAR(20)               not null,
-    NOM_COLOCATION                  CHAR(20)               not null,
-    A_UNE_CAGNOTTE                  CHAR(1)                not null,
+    ADRESSE_COLOCATION              CHAR(40)               not null,
+    NOM_COLOCATION                  CHAR(40)               not null,
+    A_UNE_CAGNOTTE                  CHAR(1)                not null,  -- 'Y' = oui, 'N' = non
     ID_PERSONNE                     NUMBER(3)              not null,
     constraint pk_colocation primary key (ID_COLOCATION)
 );
--- 'Y' = oui, 'N' = non
+
 
 drop sequence seq_colocation;
 
@@ -47,9 +47,9 @@ cache 10;
 create table PERSONNE
 (
     ID_PERSONNE                     NUMBER(3)              not null,
-    NOM_PERSONNE                    CHAR(20)               not null,
-    PRENOM_PERSONNE                 CHAR(20)               not null,
-    MAIL_PERSONNE                   CHAR(20)               not null,
+    NOM_PERSONNE                    CHAR(40)               not null,
+    PRENOM_PERSONNE                 CHAR(40)               not null,
+    MAIL_PERSONNE                   CHAR(40)               not null,
     constraint pk_personne primary key (ID_PERSONNE)
 );
 
@@ -131,7 +131,7 @@ create table CONTRAT_MEMBRE
 (
     ID_CONTRAT_MEMBRE               NUMBER(3)              not null,
     DATE_ENTREE                     DATE                   not null,	
-    DATE_SORTIE                     DATE                   not null,	
+    DATE_SORTIE                     DATE                   ,	
     ID_COLOCATION                   NUMBER(3)              not null,
     ID_PERSONNE                     NUMBER(3)              not null,
     constraint pk_contrat_membre primary key (ID_CONTRAT_MEMBRE)
@@ -212,10 +212,3 @@ alter table ACHAT_PERSONNEL
     add constraint fk1_achat_personnel foreign key (ID_CONTRAT_MEMBRE)
        references CONTRAT_MEMBRE (ID_CONTRAT_MEMBRE);
 
-alter table BENEFICIAIRE
-    add constraint fk1_beneficiare foreign key (ID_CONTRAT_MEMBRE)
-       references CONTRAT_MEMBRE (ID_CONTRAT_MEMBRE);
-
-alter table BENEFICIAIRE
-    add constraint fk2_beneficiare foreign key (ID_ACHAT_PERSONNEL)
-       references ACHAT_PERSONNEL (ID_ACHAT_PERSONNEL);

@@ -17,35 +17,39 @@ commit ;
 --    creation des donnees
 -- ============================================================
 
--- COLOCATION
+-- PERSONNE (id_per, nom, prenom, mail)
 
-insert into COLOCATION values ( , , , ) ;
-insert into COLOCATION values ( , , , ) ;
-insert into COLOCATION values ( , , , ) ;
-insert into COLOCATION values ( , , , ) ;
+insert into PERSONNE values (  1  , 'Doyon'	 , 'Belle'	, 'BelleDoyon@gmail.com'	) ;
+insert into PERSONNE values (  2  , 'Quiron'	 , 'Honore'   	, 'HonoreQuiron@gmail.com' 	) ;
+insert into PERSONNE values (  3  , 'Hachee'	 , 'Stephane' 	, 'StephaneHachee@gmail.com' 	) ;
+insert into PERSONNE values (  4  , 'Guibord' 	 , 'Bellamy'  	, 'BellamyGuibord@gmail.com' 	) ;
+insert into PERSONNE values (  5  , 'Bertrand' 	 , 'Marc'    	, 'MarcBertrand@gmail.com' 	) ;
+
+commit ;
+
+
+-- COLOCATION (id_col, adr, nom, cagnotte, id_pers)
+
+insert into COLOCATION values (  1  , '63 rue des Coudriers'	  ,  'A'  ,  'Y' ,  3  ) ;
+insert into COLOCATION values (  2  , '15 Place du Jeu de Paume'  ,  'B'  ,  'Y' ,  5  ) ;
+insert into COLOCATION values (  3  , '29 rue des Lacs'   	  ,  'C'  ,  'Y' ,  2  ) ;
+insert into COLOCATION values (  4  , '36 rue des Soeurs'	  ,  'D'  ,  'Y' ,  1  ) ;
+insert into COLOCATION values (  5  , '37 rue Ernest Renan'	  ,  'E'  ,  'Y' ,  4  ) ;
 
 
 commit ;
 
--- PERSONNE
+-- CONTRAT_MEMBRE (id_contrat, date entree, date sortie, id coloc, id pers)
 
-insert into PERSONNE values ( , , , , ) ;
-insert into PERSONNE values ( , , , , ) ;
-insert into PERSONNE values ( , , , , ) ;
-insert into PERSONNE values ( , , , , ) ;
-
-commit ;
-
--- CONTRAT_MEMBRE
-
-insert into CONTRAT_MEMBRE values ( , , , , ) ;
-insert into CONTRAT_MEMBRE values ( , , , , ) ;
-insert into CONTRAT_MEMBRE values ( , , , , ) ;
-insert into CONTRAT_MEMBRE values ( , , , , ) ;
+insert into CONTRAT_MEMBRE values (  1  ,  '01-JAN-2015'  , '01-JAN-2016' ,  1  ,  1  ) ;
+insert into CONTRAT_MEMBRE values (  2  ,  '27-JUN-2015'  , null	  ,  1  ,  2  ) ;
+insert into CONTRAT_MEMBRE values (  3  ,  '04-AUG-2015'  , null	  ,  2  ,  3  ) ;
+insert into CONTRAT_MEMBRE values (  4  ,  '30-AUG-2015'  , null	  ,  2  ,  4  ) ;
+insert into CONTRAT_MEMBRE values (  5  ,  '21-DEC-2015'  , null	  ,  2  ,  5  ) ;
 
 commit ;
-
--- VERSEMENT
+/*
+-- VERSEMENT (id_vers, date, montant, id_contrat_mb_payeur, id_contrat_membre_receveur)
 
 insert into VERSEMENT values ( , , , , ) ;
 insert into VERSEMENT values ( , , , , ) ;
@@ -54,7 +58,7 @@ insert into VERSEMENT values ( , , , , ) ;
 
 commit ;
 
--- ABONDEMENT
+-- ABONDEMENT (id, date, montant, id_contrat_mb)
 
 insert into ABONDEMENT values ( , , , , ) ;
 insert into ABONDEMENT values ( , , , , ) ;
@@ -63,7 +67,7 @@ insert into ABONDEMENT values ( , , , , ) ;
 
 commit ;
 
--- BENEFICIAIRE
+-- BENEFICIAIRE (id_contrat_mb, id beneficiaire)
 
 insert into BENEFICIAIRE values ( , , , , ) ;
 insert into BENEFICIAIRE values ( , , , , ) ;
@@ -72,7 +76,7 @@ insert into BENEFICIAIRE values ( , , , , ) ;
 
 commit ;
 
--- ACHAT_COLOCATION
+-- ACHAT_COLOCATION (id, intitulé, date, montant, id_coloc, id_contrat_mb)
 
 insert into ACHAT_COLOCATION values ( , , , , ) ;
 insert into ACHAT_COLOCATION values ( , , , , ) ;
@@ -81,7 +85,7 @@ insert into ACHAT_COLOCATION values ( , , , , ) ;
 
 commit ;
 
--- ACHAT_PERSONNEL
+-- ACHAT_PERSONNEL (id, intitulé, date, montant, id_contrat_membre)
 
 insert into ACHAT_PERSONNEL values ( , , , , ) ;
 insert into ACHAT_PERSONNEL values ( , , , , ) ;
@@ -90,14 +94,4 @@ insert into ACHAT_PERSONNEL values ( , , , , ) ;
 
 commit ;
 
--- ============================================================
---    verification des donnees
--- ============================================================
-
-select count(*),'= 37 ?','ACTEUR' from ACTEUR 
-union
-select count(*),'= 20 ?','FILM' from FILM 
-union
-select count(*),'= 14 ?','REALISATEUR' from REALISATEUR 
-union
-select count(*),'= 40 ?','ROLE' from ROLE ;
+*/
