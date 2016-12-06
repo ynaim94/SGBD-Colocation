@@ -1,24 +1,27 @@
--- Liste des colocations avec leur gestionnaire
+-- Liste des colocations avec leur gestionnaire (testé ok)
 
-Select COLOCATION_NOM,PERSONNE_NOM
+Select NOM_COLOCATION AS COLOCATION,NOM_PERSONNE AS GESTIONNAIRE
 from COLOCATION,PERSONNE
-where COLOCATION_ID_PERSONNE=PERSONNE_ID_PERSONNE;
+where COLOCATION.ID_PERSONNE=PERSONNE.ID_PERSONNE;
 
--- Ensemble des membres d'un colocation donnée
+-- Ensemble des membres d'un colocation donnée (testé ok)
 
-Select PERSONNE_NOM
-from COLOCATION,CONTRAT_MEMBRE,PERSONNE
-where COLOCATION_NOM= XX || COLOCATION_ID_COLOCATION= XX
-      and COLOCATION_ID_COLOCATION=CONTRAT_MEMBRE_ID_COLOCATION
-      and CONTRAT_MEMBRE_ID_PERSONNE=PERSONNE_ID_PERSONNE;
+Select NOM_PERSONNE AS MEMBRE
+from COLOCATION, CONTRAT_MEMBRE, PERSONNE
+where NOM_COLOCATION= 'XX' || ID_COLOCATION=XX
+      and COLOCATION.ID_COLOCATION=CONTRAT_MEMBRE.ID_COLOCATION
+      and CONTRAT_MEMBRE.ID_PERSONNE=PERSONNE.ID_PERSONNE;
 
 
--- Liste des achats effectués pour une colocation et pour un mois donné;
+-- Liste des achats effectués pour une colocation et pour un mois donné; (syntaxe ok, test sur donnée pas fais)
 
-select *
-from ACHAT_COLOCATION AC, COLOCATION C 
+select AC.INTITULE_ACHAT_COLOCATION
+from ACHAT_COLOCATION AC, COLOCATION C
 where AC.ID_COLOCATION=C.ID_COLOCATION
-      and C.NOM=XX
-      and AC.DATE><XX 
+      and C.NOM_COLOCATION='XX'
+      and EXTRACT( MONTH FROM AC.DATE_ACHAT_COLOCATION)=XX; --format( 1,2,...,9,10,11,12)
 
 --Liste des colocations pour lesquels aucun achat n'a été enregistré au cours des 6 derniers mois
+
+
+      
