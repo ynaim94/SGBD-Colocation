@@ -12,15 +12,18 @@ values (666, '01-JAN-08', '02-JAN-09', 666, 42);
 insert into CONTRAT_MEMBRE
 values (13, '01-JAN-08', '02-JAN-09', 666, 42);
 
+--------------------------------------------------------------------------------
 -- ajouté une personne
 insert into PERSONNE
 values (seq_personne.nextval, 'NOM', 'PRENOM', 'MAIL');
 
+--------------------------------------------------------------------------------
 -- ajouté une colocation
 -- soit la personne 42 qui serat le gérantr de la futur colocation
 insert into COLOCATION
 values (seq_colocation.nextval, 'ADRESSE', 'NOM', 'Y', 42);
 
+--------------------------------------------------------------------------------
 -- ajouté une personne a une colocation (= crée un contrat member)
 -- soit la personne 42 et la colocation 666
 insert into CONTRAT_MEMBRE
@@ -29,6 +32,7 @@ values (seq_contrat_membre.nextval, '01-JAN-08', '02-JAN-09', 666, 42);
 
 --Avant chaque ajout d'achat/abondement/versement par un contrat membre, vérifire que la date de l'achat/abondement/versement est comprise entre les deux dates du contrat membre
 
+--------------------------------------------------------------------------------
 -- ajouté un achat_personnel
 -- soit le contrat membre  42 qui fait l'achat et 13 et 666 qui en bénificie
 select ID_COLOCATION
@@ -47,8 +51,14 @@ values (13, seq_achat_personnel.currval);
 insert into BENEFICIAIRE
 values (666, seq_achat_personnel.currval);
 
+--------------------------------------------------------------------------------
 -- ajouté un achat_colocation
--- soit le contrat membre  42 qui fait l'achat et la colocation 666 qui en bénificie-
+-- soit le contrat membre  42 qui fait l'achat et la colocation 666 qui en bénificie
+select ID_COLOCATION
+from CONTRAT_MEMBRE
+where ID_CONTRAT_MEMBRE = 42;
+-- vérification (la valeur retourné est égale a 666)
+
 insert into ACHAT_COLOCATION
 values (seq_colocation.nextval, 'INTITULE', '01-JAN-08', 500, 666, 42);
 
@@ -61,6 +71,7 @@ where ID_COLOCATION = 666;
 insert into ACHAT_COLOCATION
 values (seq_colocation.nextval, 'INTITULE', '01-JAN-08', 500, 666, null);
 
+--------------------------------------------------------------------------------
 -- ajouté abondement
 -- soit le contrat membre  42 qui fait un abondement
 select A_UNE_CAGNOTTE
@@ -72,6 +83,7 @@ and CONTRAT_MEMBRE.ID_CONTRAT_MEMBRE = 42;
 insert into ABONDEMENT
 values (seq_abondement.nextval, '01-JAN-09', 500, 42);
 
+--------------------------------------------------------------------------------
 -- ajouté un versement
 -- soit le contrat membre  42 qui fait un versement au contrat membre 13
 select ID_COLOCATION
