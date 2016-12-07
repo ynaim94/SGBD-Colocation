@@ -30,7 +30,8 @@ insert into CONTRAT_MEMBRE
 values (seq_contrat_membre.nextval, '01-JAN-08', '02-JAN-09', 666, 42);
 
 
---Avant chaque ajout d'achat/abondement/versement par un contrat membre, vérifire que la date de l'achat/abondement/versement est comprise entre les deux dates du contrat membre
+--Avant chaque ajout d'achat/abondement/versement par un contrat membre, vérifire 
+--que la date de l'achat/abondement/versement est comprise entre les deux dates du contrat membre
 
 --------------------------------------------------------------------------------
 -- ajouté un achat_personnel
@@ -94,3 +95,6 @@ or ID_CONTRAT_MEMBRE = 13;
 
 insert into VERSEMENT
 values (seq_versement.nextval)
+
+--==============================================================================
+
