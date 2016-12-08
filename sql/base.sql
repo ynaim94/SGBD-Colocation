@@ -213,11 +213,32 @@ alter table ACHAT_PERSONNEL
     add constraint fk1_achat_personnel foreign key (ID_CONTRAT_MEMBRE)
        references CONTRAT_MEMBRE (ID_CONTRAT_MEMBRE);
 
+
 create trigger del_colocation
 before delete on COLOCATION
+for each row
 begin
 	delete from CONTRAT_MEMBRE
-	where CONTRAT_MEMBRE.ID_COLOCATION = old.ID_COLOCATION;
+	where CONTRAT_MEMBRE.ID_COLOCATION = :old.ID_COLOCATION;
+	delete from ACHAT_COLOCATION
+	where ACHAT_COLOCATION.ID_COLOCATION = :old.ID_COLOCATION;
 end;
 /
 show error trigger del_colocation;
+
+create trigger del_contrat_membre
+before delete on CONTRAT_MEMBRE
+for each row
+begin
+	delete from ABONDEMENT
+	where ABONDEMENT.ID_CONTRAT_MEMBRE = :old.ID_CONTRAT_MEMBRE;
+	delete from VERSEMENT
+	where VERSEMENT.ID_CONTRAT_MEMBRE_RECEVEUR = :old.ID_CONTRAT_MEMBRE
+	or VERSEMENT.ID_CONTRAT_MEMBRE_PAYEUR = :old.ID_CONTRAT_MEMBRE;
+	delete from ACHAT_PERSONNEL
+	where ACHAT_PERSONNEL.ID_CONTRAT_MEMBRE = :old.ID_CONTRAT_MEMBRE;
+	delete from ACHAT_COLOCATION
+	where ACHAT_COLOCATION.ID_CONTRAT_MEMBRE = :old.ID_CONTRAT_MEMBRE;
+end;
+/
+show error trigger del_contrat_membre;

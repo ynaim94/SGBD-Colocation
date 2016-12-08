@@ -112,5 +112,13 @@ select ID_PERSONNE
 from COLOCATION
 where ID_COLOCATION = 666;
 
+/*
 delete from PERSONNE
 where ID_PERSONNE = 42;
+*/
+select * from CONTRAT_MEMBRE;
+
+delete from COLOCATION
+where ID_COLOCATION = 666;
+
+select * from CONTRAT_MEMBRE;
