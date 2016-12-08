@@ -41,6 +41,7 @@ start with 1
 increment by 1
 cache 10;
 
+
 -- ============================================================
 --   Table : PERSONNE                                       
 -- ============================================================
@@ -212,3 +213,11 @@ alter table ACHAT_PERSONNEL
     add constraint fk1_achat_personnel foreign key (ID_CONTRAT_MEMBRE)
        references CONTRAT_MEMBRE (ID_CONTRAT_MEMBRE);
 
+create trigger del_colocation
+before delete on COLOCATION
+begin
+	delete from CONTRAT_MEMBRE
+	where CONTRAT_MEMBRE.ID_COLOCATION = old.ID_COLOCATION;
+end;
+/
+show error trigger del_colocation;
