@@ -98,3 +98,14 @@ values (seq_versement.nextval)
 
 --==============================================================================
 
+-- suprimet une personne
+-- supprimet 42
+
+select ID_COLOCATION
+from COLOCATION
+where ID_PERSONNE = 42;
+-- (dans l'exemple, retourne 666)
+
+select ID_PERSONNE
+from COLOCATION
+where ID_COLOCATION = 666;
