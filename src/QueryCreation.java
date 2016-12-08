@@ -4,15 +4,15 @@ public class QueryCreation {
 	
 	return "create table COLOCATION" +
 	    "("+
-	    "ID_COLOCATION NUMBER(3) not null,"+
-	    "ADRESSE_COLOCATION CHAR(20) not null,"+
-	"NOM_COLOCATION CHAR(20) not null,"+
-	"A_UNE_CAGNOTTE CHAR(1) not null,"+
-	"ID_PERSONNE NUMBER(3)  not null,"+
-	"constraint pk_colocation primary key (ID_COLOCATION)"+
-	" );";
+	    "ID_COLOCATION NUMBER(3) NOT NULL,"+
+	    "ADRESSE_COLOCATION CHAR(20) NOT NULL,"+
+	"NOM_COLOCATION CHAR(20) NOT NULL,"+
+	"A_UNE_CAGNOTTE CHAR(1) NOT NULL,"+
+	"ID_PERSONNE NUMBER(3)  NOT NULL,"+
+	    //"constraint pk_colocation primary key (ID_COLOCATION)"+
+	    " );";
 	
+    }
 }
+    
 
-static String CreateSeqColocation(){ return " " ; }
-}

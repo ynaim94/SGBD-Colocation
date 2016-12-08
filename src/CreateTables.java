@@ -1,11 +1,13 @@
 //STEP 1. Import required packages
 import java.sql.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class CreateTables {
     // JDBC driver name and database URL
     static QueryCreation create;
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-    static final String DB_URL = "jdbc:mysql://localhost/TEST";
+    static final String DB_URL = "jdbc:mysql://localhost/Colocation";
 
     //  Database credentials
     static final String USER = "root";
@@ -14,6 +16,7 @@ public class CreateTables {
     public static void main(String[] args) {
 	Connection conn = null;
 	Statement stmt = null;
+	
 	try{
 	    //STEP 2: Register JDBC driver
 	    Class.forName("com.mysql.jdbc.Driver");
@@ -26,18 +29,19 @@ public class CreateTables {
 	    //STEP 4: Execute a query
 	    System.out.println("Creating table in given database...");
 	    stmt = conn.createStatement();
-      
-      
 	    
-	    //	    String sql = create.CreateColocation() ;
-	       String sql = "CREATE TABLE EXAMPLE " +
+	    ScriptRunner runner = new ScriptRunner(conn, false, false);
+	    runner.runScript(new BufferedReader(new FileReader("sqlscript/base.sql")));
+	    
+	    //String sql = create.CreateColocation() ;
+	    /*       String sql = "CREATE TABLE EXAMPLE " +
 		     "(id INTEGER not NULL, " +
 		     " first VARCHAR(255), " + 
 		     " last VARCHAR(255), " + 
 		     " age INTEGER, " + 
-		     " PRIMARY KEY ( id ))"; 
+		     " PRIMARY KEY ( id ))"; */
 		
-	    stmt.executeUpdate(sql);
+	    //stmt.executeUpdate(sql);
 	    System.out.println("Created table in given database...");
 	}catch(SQLException se){
 	    //Handle errors for JDBC

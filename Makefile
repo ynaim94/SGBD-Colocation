@@ -1,6 +1,7 @@
 all:
 	javac -d build src/*.java
 
+
 tables: all
 	cd build && java CreateTables
 
@@ -12,5 +13,9 @@ insert: all
 
 select: all
 	cd build && java QuerySelect
+
+run: all
+	cd build && java Window
+
 clean:
 	rm -r build*/*

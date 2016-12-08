@@ -28,25 +28,80 @@ public class QuerySelect {
 	    stmt = conn.createStatement();
       
 	    ResultSet rset = stmt.executeQuery("select * from EXAMPLE");
+	    
+	    //On récupère les meta afin de récupérer le nom des colonnes
+	    
 	    ResultSetMetaData rSetMetaData = rset.getMetaData();
-	    for (int i=1; i<= rSetMetaData.getColumnCount(); i++){
-		System.out.print(rSetMetaData.getColumnName (i) + ' ');
-	    }
-	    System.out.print("\n");
-	    while(rset.next()){
-		//Retrieve by column name
-		int id  = rset.getInt("id");
-		int age = rset.getInt("age");
-		String first = rset.getString("first");
-		String last = rset.getString("last");
+	    
+	    //On initialise un tableau d'Object pour les en-têtes du tableau
+	    
+	    Object[] column = new Object[rSetMetaData.getColumnCount()];
+	    
+	    for(int i = 1 ; i <= rSetMetaData.getColumnCount(); i++)
+		column[i-1] = rSetMetaData.getColumnName(i);
+	    
 
-		//Display values
-		System.out.print("ID: " + id);
-		System.out.print(", First: " + first);
-		System.out.print(", Last: " + last);
-		System.out.println(", Age: " + age);
-		
+	    //Petite manipulation pour obtenir le nombre de lignes
+
+	    rset.last();
+	    int rowCount = rset.getRow();
+	    Object[][] data = new Object[rset.getRow()][rSetMetaData.getColumnCount()];
+
+
+	    //On revient au départ
+
+	    rset.beforeFirst();
+	    int j = 1;
+
+	    //On remplit le tableau d'Object[][]
+
+	    while(rset.next()){
+		for(int i = 1 ; i <= rSetMetaData.getColumnCount(); i++)
+		    data[j-1][i-1] = rset.getObject(i);
+		j++;
+
 	    }
+
+	    //Affichage des noms des colonnes
+
+	    for (int i=1; i<= rSetMetaData.getColumnCount(); i++){
+		System.out.print(column[i-1]);
+		System.out.print(' ');
+	    }
+
+	    System.out.println();
+
+
+	    //Affichage des donnés des Colonnes
+	    for (int k = 1; k <  j; k++){
+		for (int i = 1; i <= rSetMetaData.getColumnCount(); i++){
+		    System.out.print(data[k-1][i-1]);
+		    System.out.print(' ');
+		}
+		System.out.println();
+	    }
+
+	    System.out.println();
+	    
+
+	    /* for (int i=1; i<= rSetMetaData.getColumnCount(); i++){
+	       System.out.print(rSetMetaData.getColumnName (i) + ' ');
+	       }
+	       System.out.print("\n");
+	       while(rset.next()){
+	       //Retrieve by column name
+	       int id  = rset.getInt("id");
+	       int age = rset.getInt("age");
+	       String first = rset.getString("first");
+	       String last = rset.getString("last");
+
+	       //Display values
+	       System.out.print("ID: " + id);
+	       System.out.print(", First: " + first);
+	       System.out.print(", Last: " + last);
+	       System.out.println(", Age: " + age);
+		
+	       }*/
 	    
 
 	}catch(SQLException se){
