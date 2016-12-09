@@ -4,13 +4,14 @@
 
 -- La liste des colocation avec le nombre de leurs membre à une date donnée
 
-select C.NOM_COLOCATION AS COLOCATION,CM.NOM_CONTRAT_MEMBRE AS NOM_DU_MEMBRE,CM.PRENOM_CONTRAT_MEMBRE AS PRENOM_DU_MEMBRE
-from COLOCATION C,CONTRAT_MEMBRE CM
+select C.NOM_COLOCATION AS COLOCATION, P.NOM_PERSONNE AS NOM_DU_MEMBRE, P.PRENOM_PERSONNE AS PRENOM_DU_MEMBRE
+from COLOCATION C,CONTRAT_MEMBRE CM, PERSONNE P
 where C.ID_COLOCATION=CM.ID_COLOCATION
-      and CM.DATE_ENTRE<XX
-      and CM.DATE_SORTIE>XX;
+      and P.ID_PERSONNE=CM.ID_PERSONNE
+      and CM.DATE_ENTREE<'08-AUG-2015'
+      and (CM.DATE_SORTIE>'08-AUG-2015' OR CM.DATE_SORTIE=NULL);
 
 
 -- Pour chaque achat, le nombre de personne concernées
--- Pour une personne donnée, la liste des débit et des crédits avec leur montant. une personne a un crédit si elle effectue un achat ou verse de l'argent à une autre personne ou à une cagnotte. Elle a un debit si elle recoit de l'argent ou si elle est concernée par un achat ( dans ce cas, le dbit est égal au montant de l'achat divisé par le nombre de personne concernées)
+-- Pour une personne donnée, la liste des débit et des crédits avec leur montant. une personne a un crédit si elle effectue un achat ou verse de l'argent à une autre personne ou à une cagnotte. Elle a un debit si elle recoit de l'argent ou si elle est concernée par un achat ( dans ce cas, le débit est égal au montant de l'achat divisé par le nombre de personne concernées)
 -- Pour une colocation, la liste de ses membre avec leur solde.
