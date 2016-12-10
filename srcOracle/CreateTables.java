@@ -30,7 +30,7 @@ public class CreateTables {
 	    stmt = conn.createStatement();
 	    
 
-	    ScriptRunner2.run(stmt,"../srcOracle/sqlscript/base.sql");
+	    ScriptRunner.run(stmt,"../srcOracle/sqlscript/base.sql");
 	    
 	    
 	    
