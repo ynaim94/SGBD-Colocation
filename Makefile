@@ -1,5 +1,5 @@
 all:
-	javac -d build src/*.java
+	javac -d build srcOracle/*.java
 
 
 tables: all
