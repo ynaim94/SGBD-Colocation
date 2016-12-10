@@ -41,6 +41,27 @@ insert into ABONDEMENT
 values (seq_abondement.nextval, '01-JAN-2016', 500, 5);
 
 --------------------------------------------------------------------------------
+--ajouté un achat colocation
+select DATE_ENTREE, DATE_SORTIE
+from CONTRAT_MEMBRE
+where ID_CONTRAT_MEMBRE = 3;
+
+--l'application vérifie que la date de l'achat est comprit entre les deux dates
+
+insert into ACHAT_COLOCATION
+values (seq_colocation.nextval, 'INTITULE', '01-JAN-2016', 500, 2, 3);
+
+--avec la cagnotte
+select A_UNE_CAGNOTTE
+from COLOCATION
+where ID_COLOCATION = 1;
+
+--l'application vérifie que a_une_cagnotte = Y
+
+insert into ACHAT_COLOCATION
+values (seq_colocation.nextval, 'UN AUTRE INTITULE', '16-JAN-2016', 500, 1, null);
+
+--------------------------------------------------------------------------------
 
 delete from PERSONNE
 where ID_PERSONNE = 1;
