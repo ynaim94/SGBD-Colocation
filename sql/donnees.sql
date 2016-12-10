@@ -30,11 +30,11 @@ commit ;
 
 -- COLOCATION (id_col, adr, nom, cagnotte, id_pers)
 
-insert into COLOCATION values (  1  , '63 rue des Coudriers'	  ,  'A'  ,  'Y' ,  3  ) ;
-insert into COLOCATION values (  2  , '15 Place du Jeu de Paume'  ,  'B'  ,  'Y' ,  5  ) ;
-insert into COLOCATION values (  3  , '29 rue des Lacs'   	  ,  'C'  ,  'Y' ,  2  ) ;
-insert into COLOCATION values (  4  , '36 rue des Soeurs'	  ,  'D'  ,  'Y' ,  1  ) ;
-insert into COLOCATION values (  5  , '37 rue Ernest Renan'	  ,  'E'  ,  'Y' ,  4  ) ;
+insert into COLOCATION values (  1  , '63 rue des Coudriers'	  ,  'A'  ,  'Y' ,  1  ) ;
+insert into COLOCATION values (  2  , '15 Place du Jeu de Paume'  ,  'B'  ,  'Y' ,  1  ) ;
+insert into COLOCATION values (  3  , '29 rue des Lacs'   	  ,  'C'  ,  'Y' ,  1  ) ;
+insert into COLOCATION values (  4  , '36 rue des Soeurs'	  ,  'D'  ,  'Y' ,  3  ) ;
+insert into COLOCATION values (  5  , '37 rue Ernest Renan'	  ,  'E'  ,  'Y' ,  2  ) ;
 
 
 commit ;
@@ -42,10 +42,10 @@ commit ;
 -- CONTRAT_MEMBRE (id_contrat, date entree, date sortie, id coloc, id pers)
 
 insert into CONTRAT_MEMBRE values (  1  ,  '01-JAN-2015'  , '01-JAN-2016' ,  1  ,  1  ) ;
-insert into CONTRAT_MEMBRE values (  2  ,  '27-JUN-2015'  , null	  ,  1  ,  2  ) ;
-insert into CONTRAT_MEMBRE values (  3  ,  '04-AUG-2015'  , null	  ,  2  ,  3  ) ;
+insert into CONTRAT_MEMBRE values (  2  ,  '27-JUN-2015'  , null	  ,  1  ,  4  ) ;
+insert into CONTRAT_MEMBRE values (  3  ,  '04-AUG-2015'  , null	  ,  2  ,  4  ) ;
 insert into CONTRAT_MEMBRE values (  4  ,  '30-AUG-2015'  , null	  ,  2  ,  4  ) ;
-insert into CONTRAT_MEMBRE values (  5  ,  '21-DEC-2015'  , null	  ,  2  ,  5  ) ;
+insert into CONTRAT_MEMBRE values (  5  ,  '21-DEC-2015'  , null	  ,  2  ,  2  ) ;
 
 commit ;
 /*

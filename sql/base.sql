@@ -36,8 +36,8 @@ create table COLOCATION
 drop sequence seq_colocation;
 
 create sequence seq_colocation
-minvalue 1
-start with 1
+minvalue 10
+start with 10
 increment by 1
 cache 10;
 
@@ -57,8 +57,8 @@ create table PERSONNE
 drop sequence seq_personne;
 
 create sequence seq_personne
-minvalue 1
-start with 1
+minvalue 10
+start with 10
 increment by 1
 cache 10;
 
@@ -79,8 +79,8 @@ create table ACHAT_COLOCATION
 drop sequence seq_achat_colocation;
 
 create sequence seq_achat_colocation
-minvalue 1
-start with 1
+minvalue 10
+start with 10
 increment by 1
 cache 10;
 
@@ -99,8 +99,8 @@ create table ABONDEMENT
 drop sequence seq_abondement;
 
 create sequence seq_abondement
-minvalue 1
-start with 1
+minvalue 10
+start with 10
 increment by 1
 cache 10;
 
@@ -120,8 +120,8 @@ create table VERSEMENT
 drop sequence seq_versement;
 
 create sequence seq_versement
-minvalue 1
-start with 1
+minvalue 10
+start with 10
 increment by 1
 cache 10;
 
@@ -141,8 +141,8 @@ create table CONTRAT_MEMBRE
 drop sequence seq_contrat_membre;
 
 create sequence seq_contrat_membre
-minvalue 1
-start with 1
+minvalue 10
+start with 10
 increment by 1
 cache 10;
 
@@ -162,8 +162,8 @@ create table ACHAT_PERSONNEL
 drop sequence seq_achat_personnel;
 
 create sequence seq_achat_personnel
-minvalue 1
-start with 1
+minvalue 10
+start with 10
 increment by 1
 cache 10;
 
@@ -179,66 +179,54 @@ create table BENEFICIAIRE
 
 alter table COLOCATION
     add constraint fk1_colocation foreign key (ID_PERSONNE)
-       references PERSONNE (ID_PERSONNE);
+       references PERSONNE (ID_PERSONNE) on delete cascade;
 
 alter table ACHAT_COLOCATION
     add constraint fk1_achat_colocation foreign key (ID_COLOCATION)
-       references COLOCATION (ID_COLOCATION);
+       references COLOCATION (ID_COLOCATION) on delete cascade;
 
 alter table ACHAT_COLOCATION
     add constraint fk2_achat_colocation foreign key (ID_CONTRAT_MEMBRE)
-       references CONTRAT_MEMBRE (ID_CONTRAT_MEMBRE);
+       references CONTRAT_MEMBRE (ID_CONTRAT_MEMBRE) on delete cascade;
 
 alter table ABONDEMENT
     add constraint fk1_abondement foreign key (ID_CONTRAT_MEMBRE)
-       references CONTRAT_MEMBRE (ID_CONTRAT_MEMBRE);
+       references CONTRAT_MEMBRE (ID_CONTRAT_MEMBRE) on delete cascade;
 
 alter table VERSEMENT
     add constraint fk1_versement foreign key (ID_CONTRAT_MEMBRE_PAYEUR)
-       references CONTRAT_MEMBRE (ID_CONTRAT_MEMBRE);
+       references CONTRAT_MEMBRE (ID_CONTRAT_MEMBRE) on delete cascade;
 
 alter table VERSEMENT
     add constraint fk2_versement foreign key (ID_CONTRAT_MEMBRE_RECEVEUR)
-       references CONTRAT_MEMBRE (ID_CONTRAT_MEMBRE);
+       references CONTRAT_MEMBRE (ID_CONTRAT_MEMBRE) on delete cascade;
 
 alter table CONTRAT_MEMBRE
     add constraint fk1_contrat_membre foreign key (ID_COLOCATION)
-       references COLOCATION (ID_COLOCATION);
+       references COLOCATION (ID_COLOCATION) on delete cascade;
 
 alter table CONTRAT_MEMBRE
     add constraint fk2_contrat_membre foreign key (ID_PERSONNE)
-       references PERSONNE (ID_PERSONNE);
+       references PERSONNE (ID_PERSONNE) on delete cascade;
 
 alter table ACHAT_PERSONNEL
     add constraint fk1_achat_personnel foreign key (ID_CONTRAT_MEMBRE)
-       references CONTRAT_MEMBRE (ID_CONTRAT_MEMBRE);
+       references CONTRAT_MEMBRE (ID_CONTRAT_MEMBRE) on delete cascade;
 
 
-create trigger del_colocation
-before delete on COLOCATION
+drop view CONTRAT_MEMBREV cascade constraints;
+create view CONTRAT_MEMBREV as select * from CONTRAT_MEMBRE;
+
+create trigger ins_contrat_membre
+instead of insert on CONTRAT_MEMBREV
 for each row
 begin
-	delete from CONTRAT_MEMBRE
-	where CONTRAT_MEMBRE.ID_COLOCATION = :old.ID_COLOCATION;
-	delete from ACHAT_COLOCATION
-	where ACHAT_COLOCATION.ID_COLOCATION = :old.ID_COLOCATION;
+	if :new.DATE_ENTREE <= :new.DATE_SORTIE
+	then
+		insert into CONTRAT_MEMBRE values (:new.ID_CONTRAT_MEMBRE, :new.DATE_ENTREE, :new.DATE_SORTIE, :new.ID_COLOCATION, :new.ID_PERSONNE);
+	else
+		null;
+	end if;
 end;
 /
-show error trigger del_colocation;
-
-create trigger del_contrat_membre
-before delete on CONTRAT_MEMBRE
-for each row
-begin
-	delete from ABONDEMENT
-	where ABONDEMENT.ID_CONTRAT_MEMBRE = :old.ID_CONTRAT_MEMBRE;
-	delete from VERSEMENT
-	where VERSEMENT.ID_CONTRAT_MEMBRE_RECEVEUR = :old.ID_CONTRAT_MEMBRE
-	or VERSEMENT.ID_CONTRAT_MEMBRE_PAYEUR = :old.ID_CONTRAT_MEMBRE;
-	delete from ACHAT_PERSONNEL
-	where ACHAT_PERSONNEL.ID_CONTRAT_MEMBRE = :old.ID_CONTRAT_MEMBRE;
-	delete from ACHAT_COLOCATION
-	where ACHAT_COLOCATION.ID_CONTRAT_MEMBRE = :old.ID_CONTRAT_MEMBRE;
-end;
-/
-show error trigger del_contrat_membre;
+show error trigger ins_contrat_membre;
