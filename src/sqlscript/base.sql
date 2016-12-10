@@ -1,5 +1,3 @@
-
-
 drop table COLOCATION cascade constraints;
 
 drop table PERSONNE cascade constraints;
@@ -17,14 +15,12 @@ drop table CONTRAT_MEMBRE cascade constraints;
 drop table VERSEMENT cascade constraints;
 
 create table COLOCATION
-(
-    ID_COLOCATION INT(3) NOT NULL,
+(  ID_COLOCATION NUMBER(3) NOT NULL,
     ADRESSE_COLOCATION CHAR(20) not null,
     NOM_COLOCATION CHAR(20) not null,
     A_UNE_CAGNOTTE CHAR(1) not null,
-    ID_PERSONNE INT(3) not null,
-    constraint pk_colocation primary key (ID_COLOCATION)
-);
+    ID_PERSONNE NUMBER(3) not null,
+    constraint pk_colocation primary key (ID_COLOCATION));
 -- 'Y' = oui, 'N' = non
 
 drop sequence seq_colocation;
@@ -38,7 +34,7 @@ cache 10;
 
 create table PERSONNE
 (
-    ID_PERSONNE                     INT(3)              not null,
+    ID_PERSONNE                     NUMBER(3)              not null,
     NOM_PERSONNE                    CHAR(20)               not null,
     PRENOM_PERSONNE                 CHAR(20)               not null,
     MAIL_PERSONNE                   CHAR(20)               not null,
@@ -56,12 +52,12 @@ cache 10;
 
 create table ACHAT_COLOCATION
 (
-    ID_ACHAT_COLOCATION             INT(3)              not null,
-    INTITULE_ACHAT_COLOCATION       CHAR(30)               not null,
+    ID_ACHAT_COLOCATION             NUMBER(3)              not null,
+    NUMBERITULE_ACHAT_COLOCATION       CHAR(30)               not null,
     DATE_ACHAT_COLOCATION           DATE                   not null,
-    MONTANT_ACHAT_COLOCATION        INT                    not null,
-    ID_COLOCATION                   INT(3)              not null,
-    ID_CONTRAT_MEMBRE               INT(3)              ,
+    MONTANT_ACHAT_COLOCATION        NUMBER                    not null,
+    ID_COLOCATION                   NUMBER(3)              not null,
+    ID_CONTRAT_MEMBRE               NUMBER(3)              ,
     constraint pk_achat_colocation primary key (ID_ACHAT_COLOCATION)
 );
 
@@ -75,10 +71,10 @@ cache 10;
 
 create table ABONDEMENT
 (
-    ID_ABONDEMENT                   INT(3)              not null,
+    ID_ABONDEMENT                   NUMBER(3)              not null,
     DATE_ABONDEMENT                 DATE                   not null,	
-    MONTANT_ABONDEMENT              INT                    not null,
-    ID_CONTRAT_MEMBRE               INT(3)              not null,
+    MONTANT_ABONDEMENT              NUMBER                    not null,
+    ID_CONTRAT_MEMBRE               NUMBER(3)              not null,
     constraint pk_abondement primary key (ID_ABONDEMENT)
 );
 
@@ -93,11 +89,11 @@ cache 10;
 
 create table VERSEMENT
 (
-    ID_VERSEMENT                    INT(3)              not null,
+    ID_VERSEMENT                    NUMBER(3)              not null,
     DATE_VERSEMENT                  DATE                   not null,	
-    MONTANT_VERSEMENT               INT                    not null,
-    ID_CONTRAT_MEMBRE_PAYEUR        INT(3)              not null,
-    ID_CONTRAT_MEMBRE_RECEVEUR      INT(3)              not null,
+    MONTANT_VERSEMENT               NUMBER                    not null,
+    ID_CONTRAT_MEMBRE_PAYEUR        NUMBER(3)              not null,
+    ID_CONTRAT_MEMBRE_RECEVEUR      NUMBER(3)              not null,
     constraint pk_versement primary key (ID_VERSEMENT)
 );
 
@@ -112,11 +108,11 @@ cache 10;
 
 create table CONTRAT_MEMBRE
 (
-    ID_CONTRAT_MEMBRE               INT(3)              not null,
+    ID_CONTRAT_MEMBRE               NUMBER(3)              not null,
     DATE_ENTREE                     DATE                   not null,	
     DATE_SORTIE                     DATE                   not null,	
-    ID_COLOCATION                   INT(3)              not null,
-    ID_PERSONNE                     INT(3)              not null,
+    ID_COLOCATION                   NUMBER(3)              not null,
+    ID_PERSONNE                     NUMBER(3)              not null,
     constraint pk_contrat_membre primary key (ID_CONTRAT_MEMBRE)
 );
 
@@ -131,11 +127,11 @@ cache 10;
 
 create table ACHAT_PERSONNEL
 (
-    ID_ACHAT_PERSONNEL              INT(3)              not null,
-    INTITULE_ACHAT_PERSONNEL        CHAR(30)               not null,
+    ID_ACHAT_PERSONNEL              NUMBER(3)              not null,
+    NUMBERITULE_ACHAT_PERSONNEL        CHAR(30)               not null,
     DATE_ACHAT_PERSONNEL            DATE                   not null,
-    MONTANT_ACHAT_PERSONNEL         INT                    not null,
-    ID_CONTRAT_MEMBRE               INT(3)              not null,
+    MONTANT_ACHAT_PERSONNEL         NUMBER                    not null,
+    ID_CONTRAT_MEMBRE               NUMBER(3)              not null,
     constraint pk_achat_personnel primary key (ID_ACHAT_PERSONNEL)
 );
 
@@ -150,8 +146,8 @@ cache 10;
 
 create table BENEFICIAIRE
 (
-    ID_CONTRAT_MEMBRE               INT(3)              not null,
-    ID_ACHAT_PERSONNEL              INT(3)              not null,
+    ID_CONTRAT_MEMBRE               NUMBER(3)              not null,
+    ID_ACHAT_PERSONNEL              NUMBER(3)              not null,
     constraint pk_beneficiaire primary key (ID_CONTRAT_MEMBRE, ID_ACHAT_PERSONNEL)
 );
 

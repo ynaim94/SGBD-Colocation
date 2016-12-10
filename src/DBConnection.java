@@ -6,20 +6,20 @@ import javax.swing.JOptionPane;
 
 public class DBConnection{
     
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    
-    static final String DB_URL = "jdbc:mysql://localhost/TEST";
-    
-    //  Database credentials
-    static final String USER = "root";
-    static final String PASS = "123456789";
+   // JDBC driver name and database URL
+   static final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver"; 
+   static final String DB_URL = "jdbc:oracle:thin:@localhost:1521/XE";
+
+   //  Database credentials
+    static final String USER = "SYSTEM";
+   static final String PASS = "123456789";
     
     private static Connection connect = null;
     
     public static Connection getInstance(){
 	if(connect == null){
 	    try {
-		Class.forName("com.mysql.jdbc.Driver");
+		Class.forName(JDBC_DRIVER);
 		System.out.println("Connecting to a selected database...");
 		connect = DriverManager.getConnection(DB_URL, USER, PASS);
 		System.out.println("Connected database successfully...");

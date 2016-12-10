@@ -1,47 +1,39 @@
 //STEP 1. Import required packages
 import java.sql.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
 
 public class CreateTables {
+
+    //    static QueryCreation create;
     // JDBC driver name and database URL
-    static QueryCreation create;
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-    static final String DB_URL = "jdbc:mysql://localhost/Colocation";
+    static final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver"; 
+    static final String DB_URL = "jdbc:oracle:thin:@localhost:1521/XE";
 
     //  Database credentials
-    static final String USER = "root";
+    static final String USER = "SYSTEM";
     static final String PASS = "123456789";
-   
+      
     public static void main(String[] args) {
 	Connection conn = null;
 	Statement stmt = null;
 	
 	try{
 	    //STEP 2: Register JDBC driver
-	    Class.forName("com.mysql.jdbc.Driver");
+	    Class.forName(JDBC_DRIVER);
 
 	    //STEP 3: Open a connection
 	    System.out.println("Connecting to a selected database...");
 	    conn = DriverManager.getConnection(DB_URL, USER, PASS);
 	    System.out.println("Connected database successfully...");
       
-	    //STEP 4: Execute a query
+	    //STEP 4: Create a Statement
 	    System.out.println("Creating table in given database...");
 	    stmt = conn.createStatement();
 	    
-	    ScriptRunner runner = new ScriptRunner(conn, false, false);
-	    runner.runScript(new BufferedReader(new FileReader("sqlscript/base.sql")));
+	    //STEP5: Run the script to create Tables
+	    ScriptRunner.run(stmt,"../sql/base.sql");
+
+	    //TODO: Lire les requêtes de creation Trigger
 	    
-	    //String sql = create.CreateColocation() ;
-	    /*       String sql = "CREATE TABLE EXAMPLE " +
-		     "(id INTEGER not NULL, " +
-		     " first VARCHAR(255), " + 
-		     " last VARCHAR(255), " + 
-		     " age INTEGER, " + 
-		     " PRIMARY KEY ( id ))"; */
-		
-	    //stmt.executeUpdate(sql);
 	    System.out.println("Created table in given database...");
 	}catch(SQLException se){
 	    //Handle errors for JDBC

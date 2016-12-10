@@ -35,8 +35,6 @@ public class Window extends JFrame {
 
     private JPanel result = new JPanel();
 
-    // private String query = "select * from BENEFICIAIRE";
-
     private JTextArea text = new JTextArea();
 
   
@@ -60,29 +58,29 @@ public class Window extends JFrame {
 	combo.addItem("Selectionner une requete");
 	combo.addItem("Liste des colocations avec leur gestionnaire");
 	combo.addItem("Ensemble des membres d'une colocation donnée");
-	combo.addItem("Liste des achats efefctués par une colocation et pour un mois donné");
+	combo.addItem("Liste des achats effectués par une colocation et pour un mois donné");
 	combo.addItem("Liste des colocations pour lesquels aucun achat n'a été enregistré au cous des 6 derniers mois");
 	combo.addItem("Liste des colocations avec le nombre de leurs membres à une date donnée");
 	combo.addItem("Pour chaque achat, le nombre de personnes concernées");
 	combo.addItem("Pour une personne donnée, la liste des débits et des crédits avec leur montant");
 	combo.addItem("Pour une colocation, la liste de ses membres avec leur solde");
 	run.setPreferredSize(new Dimension(30, 35));
-	//combo.setPreferredSize(new Dimension(100,20));
 	run.setBorder(null);
 	run.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent event){
-		    int number = numberParameter(text.getText());
+		    String query = QuerySelected(combo.getSelectedItem());
+		    int number = numberParameter(query);
 		    if ( number  == 0)
-			initTable(text.getText());
-		    //Générer fenêtrede dialogue
-		    else {
+			initTable(query);
+		    
+		    else { //Générer fenêtrede dialogue
 			JOptionPane jop = new JOptionPane();
 			Object value[] = new Object[number];
 			for (int i=0; i < number; i++){
 			    value[i] = jop.showInputDialog(null, "Donnez la valeur du parametre" + (i+1), "Param" + (i+1) , JOptionPane.QUESTION_MESSAGE);
-
+			    
 			}
-			initTable(text.getText(), value, number);
+			initTable(query, value, number);
 		    }
 		}
 	    });
@@ -107,8 +105,8 @@ public class Window extends JFrame {
     public void initContent(){
 	//Vous connaissez ça...
 	result.setLayout(new BorderLayout());
-	split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(text), result);
-	split.setDividerLocation(100);
+	split = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(), result);
+	split.setDividerLocation(150);
 	getContentPane().add(split, BorderLayout.CENTER);
 	
     }
@@ -193,19 +191,38 @@ public class Window extends JFrame {
 	    j++;
 	}
 
-	//On ferme le tout                                     
-	    
 
-	//long totalTime = System.currentTimeMillis() - start;
 
 	//On enlève le contenu de notre conteneur
 	result.removeAll();
 	//On y ajoute un JTable
 	result.add(new JScrollPane(new JTable(data, column)), BorderLayout.CENTER);
-	//result.add(new JLabel("La requête à été exécuter en " + totalTime + " ms et a retourné " + rowCount + " ligne(s)"), BorderLayout.SOUTH);
+
 	//On force la mise à jour de l'affichage
 	result.revalidate();
 	    
+    }
+
+
+    private String QuerySelected (Object c){
+	
+	if ( c == "Liste des colocations avec leur gestionnaire")
+	    return ScriptRunner.getQuery("../sql/consultations/listColocGest.sql");
+	if ( c == "Ensemble des membres d'une colocation donnée")
+	     return ScriptRunner.getQuery("../sql/consultations/membColoc.sql");
+
+	if ( c == "Liste des achats effectués par une colocation et pour un mois donné")
+	     return ScriptRunner.getQuery("../sql/consultations/listAchatColoc.sql");
+
+	if ( c == "Liste des colocations pour lesquels aucun achat n'a été enregistré au cous des 6 derniers mois")
+	    return ScriptRunner.getQuery("../sql/consultations/listColocSixMois.sql");
+	if ( c == "Liste des colocations avec le nombre de leurs membres à une date donnée")
+	    return ScriptRunner.getQuery("../sql/consultations/listColocNbrMemb.sql");
+	if ( c == "Pour chaque achat, le nombre de personnes concernées")
+	    return ScriptRunner.getQuery("../sql/consultations/nbrPersArchat.sql");
+	if ( c == "Pour une colocation, la liste de ses membres avec leur solde")
+	    return ScriptRunner.getQuery("../sql/consultations/colocMbrSold.sql");
+	return "";
     }
     
     /**
@@ -216,4 +233,8 @@ public class Window extends JFrame {
 	Window fen = new Window();
 	fen.setVisible(true);
     }
+    
+    
+    
+    
 }

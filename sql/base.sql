@@ -27,7 +27,8 @@ create table COLOCATION
     ID_COLOCATION                   NUMBER(3)              NOT NULL,
     ADRESSE_COLOCATION              CHAR(40)               not null,
     NOM_COLOCATION                  CHAR(40)               not null,
-    A_UNE_CAGNOTTE                  CHAR(1)                not null,  -- 'Y' = oui, 'N' = non
+    A_UNE_CAGNOTTE                  CHAR(1)                not null,
+    -- 'Y' = oui, 'N' = non
     ID_PERSONNE                     NUMBER(3)              not null,
     constraint pk_colocation primary key (ID_COLOCATION)
 );
