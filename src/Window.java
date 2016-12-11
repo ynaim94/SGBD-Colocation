@@ -22,7 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.JComboBox;
 
-import java.util.Arrays.*;
+import java.util.Arrays;
 
 import java.lang.String;
 
@@ -63,15 +63,9 @@ public class Window extends JFrame {
    
     private void initToolbar(){
 	combo.addItem("Selectionner une requete");
-	//	for (int i = 0; i < 
-	combo.addItem(queryArray[0]);
-	combo.addItem(queryArray[1]);
-	combo.addItem(queryArray[2]);
-	combo.addItem(queryArray[3]);
-	combo.addItem(queryArray[4]);
-	combo.addItem(queryArray[5]);
-	combo.addItem(queryArray[6]);
-	combo.addItem(queryArray[7]);
+	for (int i = 0; i < queryArray.length; i++){ 
+	    combo.addItem(queryArray[i]);
+	} 
 	run.setPreferredSize(new Dimension(30, 35));
 	run.setBorder(null);
 	run.addActionListener(new ActionListener(){
@@ -89,7 +83,7 @@ public class Window extends JFrame {
 			  value[i] = jop.showInputDialog(null, "Donnez la valeur du parametre" + (i+1), "Param" + (i+1) , JOptionPane.QUESTION_MESSAGE);
 			  
 			  }*/
-			displayPane(jop,query);
+			displayPane(jop,combo.getSelectedItem());
 			initTable(query, value, number);
 		    }
 		}
@@ -235,8 +229,18 @@ public class Window extends JFrame {
 	return "";
     }
 
-    private void displayPane( JOptionPane pan, String query){
+    private void displayPane( JOptionPane pan, Object query, Object[] value){
+	String q = (String) query;
+	int n = 0;
 
+	for (int i =0 ; i < queryArray.length; i++){
+	    if  (q.compareTo(queryArray[i]) == 0) 
+		n = i;
+	}
+
+	if (n == 1) {
+	    
+	}
     }
 
 	
