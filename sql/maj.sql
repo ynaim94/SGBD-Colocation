@@ -87,6 +87,42 @@ values (seq_versement.nextval, '03-DEC-2016', 500, 5, 4);
 
 --------------------------------------------------------------------------------
 --ajouté un achat personnel
+--3 achet pour 4 et 5*
+
+select DATE_ENTREE, DATE_SORTIE
+from CONTRAT_MEMBRE
+where ID_CONTRAT_MEMBRE = 3;
+
+--l'application vérifie que la date de l'achat est comprit entre les deux dates
+
+select DATE_ENTREE, DATE_SORTIE
+from CONTRAT_MEMBRE
+where ID_CONTRAT_MEMBRE = 4;
+
+--l'application vérifie que la date de l'achat est comprit entre les deux dates
+
+select DATE_ENTREE, DATE_SORTIE
+from CONTRAT_MEMBRE
+where ID_CONTRAT_MEMBRE = 5;
+
+--l'application vérifie que la date de l'achat est comprit entre les deux dates
+
+select ID_COLOCATION
+from CONTRAT_MEMBRE
+where ID_CONTRAT_MEMBRE = 4
+or ID_CONTRAT_MEMBRE = 5
+or ID_CONTRAT_MEMBRE = 3;
+
+--l'application vérifie que les ids colocation sont égaux
+
+insert into ACHAT_PERSONNEL
+values (seq_achat_personnel.nextval, 'INTITULEE', '01-JAN-08', 500, 3);
+
+insert into BENEFICIAIRE
+values (4, seq_achat_personnel.currval);
+
+insert into BENEFICIAIRE
+values (5, seq_achat_personnel.currval);
 
 
 --------------------------------------------------------------------------------
