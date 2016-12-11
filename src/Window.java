@@ -30,13 +30,13 @@ public class Window extends JFrame {
 
 
     private String[] queryArray= {"Liste des colocations avec leur gestionnaire",
-			     "Ensemble des membres d'une colocation donnée",
-			     "Liste des achats effectués par une colocation et pour un mois donné",
-			     "Liste des colocations pour lesquels aucun achat n'a été enregistré au cous des 6 derniers mois",
-			     "Liste des colocations avec le nombre de leurs membres à une date donnée",
-			     "Pour chaque achat, le nombre de personnes concernées",
-			     "Pour une personne donnée, la liste des débits et des crédits avec leur montant",
-			     "Pour une colocation, la liste de ses membres avec leur solde"};
+				  "Ensemble des membres d'une colocation donnée",
+				  "Liste des achats effectués par une colocation et pour un mois donné",
+				  "Liste des colocations pour lesquels aucun achat n'a été enregistré au cous des 6 derniers mois",
+				  "Liste des colocations avec le nombre de leurs membres à une date donnée",
+				  "Pour chaque achat, le nombre de personnes concernées",
+				  "Pour une personne donnée, la liste des débits et des crédits avec leur montant",
+				  "Pour une colocation, la liste de ses membres avec leur solde"};
     
     private JToolBar toolBar = new JToolBar();
 
@@ -63,7 +63,7 @@ public class Window extends JFrame {
    
     private void initToolbar(){
 	combo.addItem("Selectionner une requete");
-	for (int i = 0; i < 
+	//	for (int i = 0; i < 
 	combo.addItem(queryArray[0]);
 	combo.addItem(queryArray[1]);
 	combo.addItem(queryArray[2]);
@@ -77,7 +77,7 @@ public class Window extends JFrame {
 	run.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent event){
 		    String query = QuerySelected(combo.getSelectedItem());
-		    int 
+		    //		    int 
 		    int number = numberParameter(query);
 		    if ( number  == 0)
 			initTable(query);
@@ -87,21 +87,21 @@ public class Window extends JFrame {
 			Object value[] = new Object[number];
 			/*for (int i=0; i < number; i++){
 			  value[i] = jop.showInputDialog(null, "Donnez la valeur du parametre" + (i+1), "Param" + (i+1) , JOptionPane.QUESTION_MESSAGE);
-			    
+			  
 			  }*/
 			displayPane(jop,query);
 			initTable(query, value, number);
 		    }
 		}
 	    });
-	
+	     
 	toolBar.add(run);
 	toolBar.addSeparator();
 	toolBar.add(combo);
 	getContentPane().add(toolBar, BorderLayout.NORTH);
-	
+	     
     }
-
+	
     public int numberParameter(String query){
 	int n = 0;
 	for (int i = 0; i < query.length(); i++){
@@ -240,7 +240,7 @@ public class Window extends JFrame {
     }
 
 	
-    }
+
 
     /**
      * Point de départ du programme
@@ -250,8 +250,10 @@ public class Window extends JFrame {
 	Window fen = new Window();
 	fen.setVisible(true);
     }
+    
 
 
+}
 
     
     
