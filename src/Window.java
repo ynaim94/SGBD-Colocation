@@ -22,12 +22,14 @@ import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.JComboBox;
 
+import java.util.Arrays.*;
 
 import java.lang.String;
 
 public class Window extends JFrame {
 
-    private String[] query= {"Liste des colocations avec leur gestionnaire",
+
+    private String[] queryArray= {"Liste des colocations avec leur gestionnaire",
 			     "Ensemble des membres d'une colocation donnée",
 			     "Liste des achats effectués par une colocation et pour un mois donné",
 			     "Liste des colocations pour lesquels aucun achat n'a été enregistré au cous des 6 derniers mois",
@@ -61,19 +63,21 @@ public class Window extends JFrame {
    
     private void initToolbar(){
 	combo.addItem("Selectionner une requete");
-	combo.addItem(query[0]);
-	combo.addItem(query[1]);
-	combo.addItem(query[2]);
-	combo.addItem(query[3]);
-	combo.addItem(query[4]);
-	combo.addItem(query[5]);
-	combo.addItem(query[6]);
-	combo.addItem(query[7]);
+	for (int i = 0; i < 
+	combo.addItem(queryArray[0]);
+	combo.addItem(queryArray[1]);
+	combo.addItem(queryArray[2]);
+	combo.addItem(queryArray[3]);
+	combo.addItem(queryArray[4]);
+	combo.addItem(queryArray[5]);
+	combo.addItem(queryArray[6]);
+	combo.addItem(queryArray[7]);
 	run.setPreferredSize(new Dimension(30, 35));
 	run.setBorder(null);
 	run.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent event){
 		    String query = QuerySelected(combo.getSelectedItem());
+		    int 
 		    int number = numberParameter(query);
 		    if ( number  == 0)
 			initTable(query);
@@ -81,11 +85,11 @@ public class Window extends JFrame {
 		    else { //Générer fenêtrede dialogue
 			JOptionPane jop = new JOptionPane();
 			Object value[] = new Object[number];
-			for (int i=0; i < number; i++){
-			    value[i] = jop.showInputDialog(null, "Donnez la valeur du parametre" + (i+1), "Param" + (i+1) , JOptionPane.QUESTION_MESSAGE);
+			/*for (int i=0; i < number; i++){
+			  value[i] = jop.showInputDialog(null, "Donnez la valeur du parametre" + (i+1), "Param" + (i+1) , JOptionPane.QUESTION_MESSAGE);
 			    
-			    }
-			//displayPane(jop,query);
+			  }*/
+			displayPane(jop,query);
 			initTable(query, value, number);
 		    }
 		}
@@ -212,25 +216,32 @@ public class Window extends JFrame {
 
     private String QuerySelected (Object c){
 	
-	if ( c == query[0])
+	if ( c == queryArray[0])
 	    return ScriptRunner.getQuery("../sql/consultations/listColocGest.sql");
-	if ( c == query[1])
-	     return ScriptRunner.getQuery("../sql/consultations/membColoc.sql");
-	if ( c == query[2])
-	     return ScriptRunner.getQuery("../sql/consultations/listAchatColoc.sql");
-	if ( c == query[3])
+	if ( c == queryArray[1])
+	    return ScriptRunner.getQuery("../sql/consultations/membColoc.sql");
+	if ( c == queryArray[2])
+	    return ScriptRunner.getQuery("../sql/consultations/listAchatColoc.sql");
+	if ( c == queryArray[3])
 	    return ScriptRunner.getQuery("../sql/consultations/listColocSixMois.sql");
-	if ( c == query[4])
+	if ( c == queryArray[4])
 	    return ScriptRunner.getQuery("../sql/consultations/listColocNbrMemb.sql");
-	if ( c == query[5])
+	if ( c == queryArray[5])
 	    return ScriptRunner.getQuery("../sql/consultations/nbrPersArchat.sql");
-	if ( c == query[6])
+	if ( c == queryArray[6])
 	    return ScriptRunner.getQuery("../sql/consultations/persDebCred.sql");
-	if ( c == query[7])
+	if ( c == queryArray[7])
 	    return ScriptRunner.getQuery("../sql/consultations/colocMbrSold.sql");
 	return "";
     }
-    
+
+    private void displayPane( JOptionPane pan, String query){
+
+    }
+
+	
+    }
+
     /**
      * Point de départ du programme
      * @param args
@@ -239,8 +250,9 @@ public class Window extends JFrame {
 	Window fen = new Window();
 	fen.setVisible(true);
     }
+
+
+
     
     
-    
-    
-}
+
