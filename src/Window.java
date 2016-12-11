@@ -77,13 +77,10 @@ public class Window extends JFrame {
 			initTable(query);
 		    
 		    else { //Générer fenêtrede dialogue
-			JOptionPane jop = new JOptionPane();
+			
 			Object value[] = new Object[number];
-			/*for (int i=0; i < number; i++){
-			  value[i] = jop.showInputDialog(null, "Donnez la valeur du parametre" + (i+1), "Param" + (i+1) , JOptionPane.QUESTION_MESSAGE);
-			  
-			  }*/
-			displayPane(jop,combo.getSelectedItem());
+			displayPane(combo.getSelectedItem(),value);
+			System.out.println(value);
 			initTable(query, value, number);
 		    }
 		}
@@ -229,17 +226,18 @@ public class Window extends JFrame {
 	return "";
     }
 
-    private void displayPane( JOptionPane pan, Object query, Object[] value){
+    private void displayPane( Object query, Object[] value){
 	String q = (String) query;
 	int n = 0;
-
 	for (int i =0 ; i < queryArray.length; i++){
 	    if  (q.compareTo(queryArray[i]) == 0) 
 		n = i;
 	}
 
 	if (n == 1) {
-	    
+	    String[] field = {"Nom de la colocation", "ID de la colocation"}; 
+	    dialogQuery dQ= new dialogQuery(null, "test", true, field);
+	    value = dQ.getValue();
 	}
     }
 
