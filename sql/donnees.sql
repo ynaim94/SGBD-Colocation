@@ -48,6 +48,25 @@ insert into CONTRAT_MEMBRE values (  4  ,  '30-AUG-2015'  , null	  ,  2  ,  4  )
 insert into CONTRAT_MEMBRE values (  5  ,  '21-DEC-2015'  , null	  ,  2  ,  2  ) ;
 
 commit ;
+
+-- ACHAT_COLOCATION (id, intitulé, date, montant, id_coloc, id_contrat_mb)
+
+insert into ACHAT_COLOCATION values ( 1 , 'ACHAT1' , '06-DEC-2016' , 1  ,  2) ;
+insert into ACHAT_COLOCATION values ( 2 , 'ACHAT2' , '03-JAN-2015' ,  2 ,  null) ;
+commit ;
+
+-- BENEFICIAIRE (id_contrat_mb, id beneficiaire)
+
+insert into BENEFICIAIRE values (4, 1) ;
+insert into BENEFICIAIRE values (5, 1) ;
+
+commit ;
+
+-- ACHAT_PERSONNEL (id, intitulé, date, montant, id_contrat_membre)
+
+insert into ACHAT_PERSONNEL values ( 1 , 'ACHAT PERSO 1' , '02-JAN-2016', 8000 , 3 ) ;
+
+commit ;
 /*
 -- VERSEMENT (id_vers, date, montant, id_contrat_mb_payeur, id_contrat_membre_receveur)
 
@@ -76,14 +95,7 @@ insert into BENEFICIAIRE values ( , , , , ) ;
 
 commit ;
 
--- ACHAT_COLOCATION (id, intitulé, date, montant, id_coloc, id_contrat_mb)
 
-insert into ACHAT_COLOCATION values ( , , , , ) ;
-insert into ACHAT_COLOCATION values ( , , , , ) ;
-insert into ACHAT_COLOCATION values ( , , , , ) ;
-insert into ACHAT_COLOCATION values ( , , , , ) ;
-
-commit ;
 
 -- ACHAT_PERSONNEL (id, intitulé, date, montant, id_contrat_membre)
 

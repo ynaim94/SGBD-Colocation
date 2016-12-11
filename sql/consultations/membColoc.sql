@@ -1,4 +1,4 @@
--- Ensemble des membres d'un colocation donnée (testé ok)
+-- Ensemble des membres d'un colocation donnée
 
 Select NOM_PERSONNE AS MEMBRE
 from COLOCATION, CONTRAT_MEMBRE, PERSONNE
