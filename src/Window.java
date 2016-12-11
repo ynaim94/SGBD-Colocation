@@ -216,21 +216,21 @@ public class Window extends JFrame {
 
     private String QuerySelected (Object c){
 	
-	if ( c == "Liste des colocations avec leur gestionnaire")
+	if ( c == query[0])
 	    return ScriptRunner.getQuery("../sql/consultations/listColocGest.sql");
-	if ( c == "Ensemble des membres d'une colocation donnée")
+	if ( c == query[1])
 	     return ScriptRunner.getQuery("../sql/consultations/membColoc.sql");
-
-	if ( c == "Liste des achats effectués par une colocation et pour un mois donné")
+	if ( c == query[2])
 	     return ScriptRunner.getQuery("../sql/consultations/listAchatColoc.sql");
-
-	if ( c == "Liste des colocations pour lesquels aucun achat n'a été enregistré au cous des 6 derniers mois")
+	if ( c == query[3])
 	    return ScriptRunner.getQuery("../sql/consultations/listColocSixMois.sql");
-	if ( c == "Liste des colocations avec le nombre de leurs membres à une date donnée")
+	if ( c == query[4])
 	    return ScriptRunner.getQuery("../sql/consultations/listColocNbrMemb.sql");
-	if ( c == "Pour chaque achat, le nombre de personnes concernées")
+	if ( c == query[5])
 	    return ScriptRunner.getQuery("../sql/consultations/nbrPersArchat.sql");
-	if ( c == "Pour une colocation, la liste de ses membres avec leur solde")
+	if ( c == query[6])
+	    return ScriptRunner.getQuery("../sql/consultations/persDebCred.sql");
+	if ( c == query[7])
 	    return ScriptRunner.getQuery("../sql/consultations/colocMbrSold.sql");
 	return "";
     }
