@@ -47,25 +47,48 @@ public class Window extends JFrame {
     private JPanel result = new JPanel();
       
     private JComboBox combo = new JComboBox();
-		
-  
-    public Window(){
+
+    String profil;
+
+    String mode;
+
+    
+    public Window(String profilUser, String modeUser){
 	setSize(900, 600);
-	setTitle("TP JDBC");
+	setTitle("SGBD Colocation");
 	setLocationRelativeTo(null);
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
 	
-		
+	profil = profilUser;
+	modeUser = mode;
+	
 	initToolbar();
 	initContent();
     }
 	
    
     private void initToolbar(){
+
+
+	
+	if (profil == "Gestionnaire"){
+	    //combo.addItem les queryGestionnaires
+	}
+	else{
+	    if (mode == "Ouvert"){
+		//combo.addItem les queryMembresOpen
+	    }
+	    else {
+		//combo.addItem les queryMembreClose
+	    }
+	}
+	
+
 	combo.addItem("Selectionner une requete");
 	for (int i = 0; i < queryArray.length; i++){ 
 	    combo.addItem(queryArray[i]);
-	} 
+	}
+	
 	run.setPreferredSize(new Dimension(30, 35));
 	run.setBorder(null);
 	run.addActionListener(new ActionListener(){
@@ -249,8 +272,18 @@ public class Window extends JFrame {
      * @param args
      */
     public static void main(String[] args){
-	Window fen = new Window();
-	fen.setVisible(true);
+
+	String[] profilArray = {"Membre", "Gestionnaire"};
+	String[] modeArray = {"Ouvert", "Fermé"};
+	JOptionPane jop = new JOptionPane(), jop2 = new JOptionPane();
+	String profil = (String)jop.showInputDialog(null, "Veuillez indiquer votre Profil !", "Profil",JOptionPane.QUESTION_MESSAGE,null,profilArray,profilArray[0]);
+	if (profil != null){
+	    String mode = (String)jop.showInputDialog(null, "Veuillez indiquer un mode d'utilisation !", "Mode",JOptionPane.QUESTION_MESSAGE,null,modeArray,modeArray[0]);
+	    if  (mode != null){
+		Window fen = new Window(profil,mode);
+		fen.setVisible(true);
+	    }
+	}
     }
     
 
