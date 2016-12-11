@@ -43,10 +43,7 @@ public class Window extends JFrame {
     private JSplitPane split;
 
     private JPanel result = new JPanel();
-
-    private JTextArea text = new JTextArea();
-
-  
+      
     private JComboBox combo = new JComboBox();
 		
   
@@ -59,7 +56,6 @@ public class Window extends JFrame {
 		
 	initToolbar();
 	initContent();
-	//	initTable(query);
     }
 	
    
