@@ -62,6 +62,34 @@ insert into ACHAT_COLOCATION
 values (seq_colocation.nextval, 'UN AUTRE INTITULE', '16-JAN-2016', 500, 1, null);
 
 --------------------------------------------------------------------------------
+--ajouté un versement
+select DATE_ENTREE, DATE_SORTIE
+from CONTRAT_MEMBRE
+where ID_CONTRAT_MEMBRE = 5;
+
+--l'application vérifie que la date du versement est comprit entre les deux dates
+
+select DATE_ENTREE, DATE_SORTIE
+from CONTRAT_MEMBRE
+where ID_CONTRAT_MEMBRE = 4;
+
+--l'application vérifie que la date du versement est comprit entre les deux dates
+
+select ID_COLOCATION
+from CONTRAT_MEMBRE
+where ID_CONTRAT_MEMBRE = 4
+or ID_CONTRAT_MEMBRE = 5;
+
+--l'application vérifie que les deux id colocation sont égaux
+
+insert into VERSEMENT
+values (seq_versement.nextval, '03-DEC-2016', 500, 5, 4);
+
+--------------------------------------------------------------------------------
+--ajouté un achat personnel
+
+
+--------------------------------------------------------------------------------
 
 delete from PERSONNE
 where ID_PERSONNE = 1;
