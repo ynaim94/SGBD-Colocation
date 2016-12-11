@@ -1,3 +1,19 @@
+##### Pour compiler le projet: #####
 
-Le répertoire sql/consultations : Contient les scripts sql pour chaque action dans l'interface.
+      Lancer la commande $make a la racine. Les binaires se trouveront dans le répertoire build.
+
+##### Pour lancer l'interface graphique: #####
+
+      Lancer la commande $make run a la racine.
+
+##### Pour effacer les binaires dans build: #####
+
+      Lancer la commande $make clean a la racine.
+
+
+Le répertoire sql contient les script sql.
+
+Le répertoire sql/consultations : Contient les scripts sql pour chaque requête de consultation.
+
+Le répertoire sql/miseAJour : Contient les scripts sql pour chaque requête de mise a jour.
 
