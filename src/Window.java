@@ -27,6 +27,15 @@ import java.lang.String;
 
 public class Window extends JFrame {
 
+    private String[] query= {"Liste des colocations avec leur gestionnaire",
+			     "Ensemble des membres d'une colocation donnée",
+			     "Liste des achats effectués par une colocation et pour un mois donné",
+			     "Liste des colocations pour lesquels aucun achat n'a été enregistré au cous des 6 derniers mois",
+			     "Liste des colocations avec le nombre de leurs membres à une date donnée",
+			     "Pour chaque achat, le nombre de personnes concernées",
+			     "Pour une personne donnée, la liste des débits et des crédits avec leur montant",
+			     "Pour une colocation, la liste de ses membres avec leur solde"};
+    
     private JToolBar toolBar = new JToolBar();
 
     private JButton run = new JButton(new ImageIcon("../img/img.png"));
@@ -56,14 +65,14 @@ public class Window extends JFrame {
    
     private void initToolbar(){
 	combo.addItem("Selectionner une requete");
-	combo.addItem("Liste des colocations avec leur gestionnaire");
-	combo.addItem("Ensemble des membres d'une colocation donnée");
-	combo.addItem("Liste des achats effectués par une colocation et pour un mois donné");
-	combo.addItem("Liste des colocations pour lesquels aucun achat n'a été enregistré au cous des 6 derniers mois");
-	combo.addItem("Liste des colocations avec le nombre de leurs membres à une date donnée");
-	combo.addItem("Pour chaque achat, le nombre de personnes concernées");
-	combo.addItem("Pour une personne donnée, la liste des débits et des crédits avec leur montant");
-	combo.addItem("Pour une colocation, la liste de ses membres avec leur solde");
+	combo.addItem(query[0]);
+	combo.addItem(query[1]);
+	combo.addItem(query[2]);
+	combo.addItem(query[3]);
+	combo.addItem(query[4]);
+	combo.addItem(query[5]);
+	combo.addItem(query[6]);
+	combo.addItem(query[7]);
 	run.setPreferredSize(new Dimension(30, 35));
 	run.setBorder(null);
 	run.addActionListener(new ActionListener(){
@@ -79,7 +88,8 @@ public class Window extends JFrame {
 			for (int i=0; i < number; i++){
 			    value[i] = jop.showInputDialog(null, "Donnez la valeur du parametre" + (i+1), "Param" + (i+1) , JOptionPane.QUESTION_MESSAGE);
 			    
-			}
+			    }
+			//displayPane(jop,query);
 			initTable(query, value, number);
 		    }
 		}
