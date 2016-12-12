@@ -45,6 +45,7 @@ insert into CONTRAT_MEMBRE values (  2  ,  '27-JUN-2015'  , null	  ,  1  ,  2  )
 insert into CONTRAT_MEMBRE values (  3  ,  '30-AUG-2015'  , null	  ,  1  ,  4  ) ;
 insert into CONTRAT_MEMBRE values (  4  ,  '21-DEC-2015'  , null	  ,  2  ,  6  ) ;
 insert into CONTRAT_MEMBRE values (  5  ,  '08-AUG-2015'  , null	  ,  2  ,  7  ) ;
+insert into CONTRAT_MEMBRE values (  6  ,  '01-JAN-2014'  , '05-JAN-2015' ,  1  ,  1  ) ;
 
 commit ;
 
@@ -65,6 +66,8 @@ commit ;
 
 insert into BENEFICIAIRE values ( 2 , 2 ) ;
 insert into BENEFICIAIRE values ( 3 , 2 ) ;
+insert into BENEFICIAIRE values ( 1 , 1 ) ;
+insert into BENEFICIAIRE values ( 6 , 1 ) ;
 
 commit ;
 
