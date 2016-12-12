@@ -248,8 +248,15 @@ group by COLOCATION.NOM_COLOCATION;
 --   Vue pour les requêtes de statistique
 -- ============================================================
 
+drop view perso_contrat cascade constraints;
+create view perso_contrat (ID_CONTRAT_MEMBRE, ID_PERSONNE, ID_COLOCATION, DATE_ENTREE, DATE_SORTIE) as
+select ID_CONTRAT_MEMBRE, ID_PERSONNE, ID_COLOCATION, DATE_ENTREE, DATE_SORTIE
+from PERSONNE inner join CONTRAT_MEMBRE using (ID_PERSONNE);
+
 drop view nbr_personne_achat cascade constraints;
 create view nbr_personne_achat (ID_ACHAT, NOMBRE_DE_PERSONNE) as
-select ID_ACHAT_PERSONNEL, count(BENEFICIAIRE.ID_CONTRAT_MEMBRE)
-from ACHAT_PERSONNEL left join BENEFICIAIRE using (ID_ACHAT_PERSONNEL)
+select ID_ACHAT_PERSONNEL, count(ID_PERSONNE)
+from (select ID_ACHAT_PERSONNEL, ID_PERSONNE
+     from ACHAT_PERSONNEL left join (perso_contrat inner join BENEFICIAIRE using (ID_CONTRAT_MEMBRE)) using (ID_ACHAT_PERSONNEL)
+     group by ID_ACHAT_PERSONNEL, ID_PERSONNE)
 group by ID_ACHAT_PERSONNEL;

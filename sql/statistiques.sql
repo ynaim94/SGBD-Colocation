@@ -6,20 +6,23 @@
 
 -- La liste des colocation avec le nombre de leurs membre à une date donnée
 
-select ID_COLOCATION, COLOCATION.NOM_COLOCATION, count(ID_CONTRAT_MEMBRE) as NOMBRE_MEMBRE
-from COLOCATION left join CONTRAT_MEMBRE using (ID_COLOCATION)
-where CONTRAT_MEMBRE.DATE_ENTREE < '16-AUG-2015'
-and (CONTRAT_MEMBRE.DATE_SORTIE is null or CONTRAT_MEMBRE.DATE_SORTIE > '16-AUG-2015')
-group by (ID_COLOCATION, COLOCATION.NOM_COLOCATION);
+select ID_COLOCATION, NOM_COLOCATION, count(ID_COLOCATION) as NOMBRE_MEMBRE
+from (select ID_COLOCATION, NOM_COLOCATION, perso_contrat.ID_PERSONNE
+     from  COLOCATION left join perso_contrat  using (ID_COLOCATION)
+     where DATE_ENTREE < '16-AUG-2015'
+     and (DATE_SORTIE is null or DATE_SORTIE > '16-AUG-2015')
+     group by ID_COLOCATION, NOM_COLOCATION, perso_contrat.ID_PERSONNE)
+group by (ID_COLOCATION, NOM_COLOCATION);
 
+select ID_COLOCATION, NOM_COLOCATION, count(ID_COLOCATION) as NOMBRE_MEMBRE
+from (select ID_COLOCATION, NOM_COLOCATION, perso_contrat.ID_PERSONNE
+     from  COLOCATION left join perso_contrat  using (ID_COLOCATION)
+     where DATE_ENTREE < '03-JAN-2015'
+     and (DATE_SORTIE is null or DATE_SORTIE > '03-JAN-2015')
+     group by ID_COLOCATION, NOM_COLOCATION, perso_contrat.ID_PERSONNE)
+group by (ID_COLOCATION, NOM_COLOCATION);
 
 -- Pour chaque achat, le nombre de personne concernées
-
-drop view nbr_personne_achat cascade constraints;
-create view nbr_personne_achat (ID_ACHAT, NOMBRE_DE_PERSONNE) as
-select ID_ACHAT_PERSONNEL, count(BENEFICIAIRE.ID_CONTRAT_MEMBRE)
-from ACHAT_PERSONNEL left join BENEFICIAIRE using (ID_ACHAT_PERSONNEL)
-group by ID_ACHAT_PERSONNEL;
 
 select * from nbr_personne_achat
 where ID_ACHAT = 1;
