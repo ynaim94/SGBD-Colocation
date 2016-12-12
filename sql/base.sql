@@ -236,13 +236,12 @@ show error trigger ins_contrat_membre;
 --   Vue pour les requêtes de consultation
 -- ============================================================
 
-DROP VIEW ACHAT_RECENT cascade constraints;
-CREATE VIEW ACHAT_RECENT AS 
-select C.NOM_COLOCATION, COUNT(AC.INTITULE_ACHAT_COLOCATION) AS QUANTITE
-        from ACHAT_COLOCATION AC, COLOCATION C
-      	where AC.ID_COLOCATION=C.ID_COLOCATION
-      	and AC.DATE_ACHAT_COLOCATION > (SYSDATE - 0000-06-00)
-      	group by C.NOM_COLOCATION;
+drop view ACHAT_RECENT cascade constraints;
+create view ACHAT_RECENT AS 
+select COLOCATION.NOM_COLOCATION, COUNT(ACHAT_COLOCATION.INTITULE_ACHAT_COLOCATION) AS QUANTITE
+from COLOCATION  left join ACHAT_COLOCATION  using (ID_COLOCATION)		  
+where ACHAT_COLOCATION.DATE_ACHAT_COLOCATION > ADD_MONTHS(sysdate,-6)
+group by COLOCATION.NOM_COLOCATION; 
 
 
 -- ============================================================
