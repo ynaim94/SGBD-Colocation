@@ -71,7 +71,7 @@ commit ;
 --ACHAT_COLOCATION (id, intitulé, date, montant, id_coloc, id_contrat_mb)
 
 insert into ACHAT_COLOCATION values ( 1 , 'Television' , '10-JAN-2015' , 500 , 1 , 1 ) ;
-insert into ACHAT_COLOCATION values ( 2 , 'Frigo'      , '30-JUN-2015' , 399 , 1 , 2 ) ;
+insert into ACHAT_COLOCATION values ( 2 , 'Frigo'      , '30-APR-2015' , 399 , 1 , 2 ) ;
 insert into ACHAT_COLOCATION values ( 3 , 'Table'      , '10-JAN-2016' , 125 , 2 , 4 ) ;
 insert into ACHAT_COLOCATION values ( 4 , 'Canape'     , '10-SEP-2015' , 170 , 2 , 5 ) ;
 

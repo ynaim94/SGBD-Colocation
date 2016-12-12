@@ -1,37 +1,43 @@
--- Liste des colocations avec leur gestionnaire (testé ok)
+-- Liste des colocations avec leur gestionnaire (done)
 
 Select NOM_COLOCATION AS COLOCATION,NOM_PERSONNE AS GESTIONNAIRE
 from COLOCATION,PERSONNE
 where COLOCATION.ID_PERSONNE=PERSONNE.ID_PERSONNE;
 
--- Ensemble des membres d'un colocation donnée (testé ok)
+-- Ensemble des membres d'un colocation donnée (done)
 
 Select NOM_PERSONNE AS MEMBRE
 from COLOCATION, CONTRAT_MEMBRE, PERSONNE
-where (NOM_COLOCATION= 'XX' or COLOCATION.ID_COLOCATION=2)
+where COLOCATION.ID_COLOCATION=??
       and COLOCATION.ID_COLOCATION=CONTRAT_MEMBRE.ID_COLOCATION
       and CONTRAT_MEMBRE.ID_PERSONNE=PERSONNE.ID_PERSONNE;
 
 
 
 
--- Liste des achats effectués pour une colocation et pour un mois donné (compil ok, test sur donnée pas fais)
+-- Liste des achats effectués pour une colocation et pour un mois donné (done)
 
-select AC.INTITULE_ACHAT_COLOCATION AS ACHAT_COLOCATION
+select AC.INTITULE_ACHAT_COLOCATION AS ACHAT_COLOCATION, AC.MONTANT_ACHAT_COLOCATION as PRIX
 from ACHAT_COLOCATION AC, COLOCATION C
 where AC.ID_COLOCATION=C.ID_COLOCATION
-      and C.NOM_COLOCATION='XX'
-      and EXTRACT( MONTH FROM AC.DATE_ACHAT_COLOCATION)=XX; --format( 1,2,...,9,10,11,12)
+      and C.ID_COLOCATION=??
+      and EXTRACT( MONTH FROM AC.DATE_ACHAT_COLOCATION)=??; --format( 1,2,...,9,10,11,12)
 
 
 
 
---Liste des colocations pour lesquels aucun achat n'a été enregistré au cours des 6 derniers mois ( compil ok, test pas fait)
+--Liste des colocations pour lesquels aucun achat n'a été enregistré au cours des 6 derniers mois ( )
+
+DROP VIEW ACHAT_RECENT cascade constraints;
+CREATE VIEW ACHAT_RECENT AS 
+select C.NOM_COLOCATION, COUNT(AC.INTITULE_ACHAT_COLOCATION) AS QUANTITE
+        from ACHAT_COLOCATION AC, COLOCATION C
+      	where AC.ID_COLOCATION=C.ID_COLOCATION
+      	and AC.DATE_ACHAT_COLOCATION > (SYSDATE - 0000-06-00)
+      	group by C.NOM_COLOCATION);
+
+
 
 select NOM_COLOCATION AS COLOCATION
-from  (	select C.NOM_COLOCATION, COUNT(AC.INTITULE_ACHAT_COLOCATION) AS QUANTITE
-      	from ACHAT_COLOCATION AC, COLOCATION C
-      	where AC.ID_COLOCATION=C.ID_COLOCATION
-      	and AC.DATE_ACHAT_COLOCATION < (SYSDATE - '0000-06-00')
-      	group by C.NOM_COLOCATION) A
+from  ACHAT_RECENT A	
 where A.QUANTITE=0;      

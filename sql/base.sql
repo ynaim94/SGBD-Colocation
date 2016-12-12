@@ -231,8 +231,22 @@ end;
 /
 show error trigger ins_contrat_membre;
 
+
 -- ============================================================
---   Vue pour les requête de statictique
+--   Vue pour les requêtes de consultation
+-- ============================================================
+
+DROP VIEW ACHAT_RECENT cascade constraints;
+CREATE VIEW ACHAT_RECENT AS 
+select C.NOM_COLOCATION, COUNT(AC.INTITULE_ACHAT_COLOCATION) AS QUANTITE
+        from ACHAT_COLOCATION AC, COLOCATION C
+      	where AC.ID_COLOCATION=C.ID_COLOCATION
+      	and AC.DATE_ACHAT_COLOCATION > (SYSDATE - 0000-06-00)
+      	group by C.NOM_COLOCATION;
+
+
+-- ============================================================
+--   Vue pour les requêtes de statistique
 -- ============================================================
 
 drop view nbr_personne_achat cascade constraints;
