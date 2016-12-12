@@ -30,10 +30,11 @@ public class Window extends JFrame {
 
     
     private String[] queryConsultation= {"Liste des colocations avec leur gestionnaire",
-				  "Ensemble des membres d'une colocation donnée",
-				  "Liste des achats effectués par une colocation et pour un mois donné",
-				  "Liste des colocations pour lesquels aucun achat n'a été enregistré au cous des 6 derniers mois",
-				  "Liste des colocations avec le nombre de leurs membres à une date donnée",
+					 "Ensemble des membres d'une colocation donnée",
+					 "Liste des achats effectués par une colocation et pour un mois donné",
+					 "Liste des colocations pour lesquels aucun achat n'a été enregistré au cous des 6 derniers mois"};
+    
+    private String[] queryStat ={"Liste des colocations avec le nombre de leurs membres à une date donnée",
 				  "Pour chaque achat, le nombre de personnes concernées",
 				  "Pour une personne donnée, la liste des débits et des crédits avec leur montant",
 				  "Pour une colocation, la liste de ses membres avec leur solde"};
@@ -82,6 +83,10 @@ public class Window extends JFrame {
 	combo.addItem("Selectionner une requete");
 	for (int i = 0; i < queryConsultation.length; i++){ 
 	    combo.addItem(queryConsultation[i]);
+	}
+
+	for (int i = 0; i < queryStat.length; i++){ 
+	    combo.addItem(queryStat[i]);
 	}
 
 	for (int i = 0; i < queryMaj.length; i++){ 
@@ -207,7 +212,6 @@ public class Window extends JFrame {
 	    ResultSet res = pstmt.executeQuery();
 
 	    //On affiche la requete
-	    System.out.println(res.rowInserted());
 	    displayQuery(res);
 
 	    res.close();
@@ -296,14 +300,14 @@ public class Window extends JFrame {
 	    return ScriptRunner.getQuery("../sql/consultations/listAchatColoc.sql");
 	if ( c == queryConsultation[3])
 	    return ScriptRunner.getQuery("../sql/consultations/listColocSixMois.sql");
-	if ( c == queryConsultation[4])
-	    return ScriptRunner.getQuery("../sql/consultations/listColocNbrMemb.sql");
-	if ( c == queryConsultation[5])
-	    return ScriptRunner.getQuery("../sql/consultations/nbrPersArchat.sql");
-	if ( c == queryConsultation[6])
-	    return ScriptRunner.getQuery("../sql/consultations/persDebCred.sql");
-	if ( c == queryConsultation[7])
-	    return ScriptRunner.getQuery("../sql/consultations/colocMbrSold.sql");
+	if ( c == queryStat[0])
+	    return ScriptRunner.getQuery("../sql/stats/listColocNbrMemb.sql");
+	if ( c == queryStat[1])
+	    return ScriptRunner.getQuery("../sql/stats/nbrPersAchat.sql");
+	if ( c == queryStat[2])
+	    return ScriptRunner.getQuery("../sql/stats/persDebCred.sql");
+	if ( c == queryStat[3])
+	    return ScriptRunner.getQuery("../sql/stats/colocMbrSold.sql");
 	if ( c == queryMaj[0])
 	    return ScriptRunner.getQuery("../sql/miseAJour/ajoutPers.sql");
 	if ( c == queryMaj[1])
@@ -325,6 +329,17 @@ public class Window extends JFrame {
 		value[i] = dQ.getValue()[i];
 	    }
 	}
+
+	if (q == queryConsultation[2]){
+	    String[] field = {"Id de la colocation", "Mois (entre 1 et 12)"};
+	    DialogQuery dQ= new DialogQuery(null, "Veuillez entrer les parametres", true, field);
+	    for (int i = 0 ; i < value.length ; i++){
+		value[i] = dQ.getValue()[i];
+	    }
+	}
+
+	
+	
 	 if (q == queryMaj[0]){
 	     String[] field = {"Nom","Prenom","Mail"};
 	     DialogQuery dQ= new DialogQuery(null, "Veuillez entrer les parametres", true, field);
@@ -348,7 +363,8 @@ public class Window extends JFrame {
 		 value[i] = dQ.getValue()[i];
 	     }
 	 }
-	 
+
+
 	 
     }
 
