@@ -281,12 +281,12 @@ public class Window extends JFrame {
 	    char[] month1 = new char[2];
 	    char[] month2 = new char[2];
 
-	    for (int i = 0 ; i < 2; i++){
-		month1[i] = d1[i];
+	    for (int i = 5 ; i < 7; i++){
+		month1[i-5] = d1[i];
 	    }
 	    
-	    for (int i = 0 ; i < 2; i++){
-		month2[i] = d2[i];
+	    for (int i = 5 ; i < 7; i++){
+		month2[i-5] = d2[i];
 	    }
 
 	    if ( Integer.parseInt(new String(month1) ) < Integer.parseInt(new String(month2)))
@@ -295,12 +295,12 @@ public class Window extends JFrame {
 		char[] day1 = new char[2];
 		char[] day2 = new char[2];
 
-		for (int i = 0 ; i < 2; i++){
-		    day1[i] = d1[i];
+		for (int i = 8 ; i < 10; i++){
+		    day1[i-8] = d1[i];
 		}
 	    
 		for (int i = 0 ; i < 2; i++){
-		    day2[i] = d2[i];
+		    day2[i-8] = d2[i];
 		}
 
 		if ( Integer.parseInt(new String(day1) ) <= Integer.parseInt(new String(day2)))
@@ -312,10 +312,10 @@ public class Window extends JFrame {
     
 	return false;
     }
+
+    //Methode pour la requete de mise a jour : Ajouter un abondement qui a un comportement non générique (Se fait sur plusieurs requêtes)
     
     public void updateQuery3(){
-
-	
 
 	try {
 	    String query ="select DATE_ENTREE, DATE_SORTIE, sysdate from CONTRAT_MEMBRE  where ID_CONTRAT_MEMBRE = ?";
@@ -331,29 +331,29 @@ public class Window extends JFrame {
 	    ResultSet res = pstmt.executeQuery();
 
 	    ResultSetMetaData meta = res.getMetaData();
-	    
-	    
-	    //Petite manipulation pour obtenir le nombre de lignes
-	    res.last();
-	    int rowCount = res.getRow();
-	    Object[][] data = new Object[res.getRow()][meta.getColumnCount()];
 
-	    //On revient au départ
-	    res.beforeFirst();
-	    int j = 1;
-
-	    //On remplit le tableau d'Object[][]
-	    while(res.next()){
-		for(int i = 1 ; i <= meta.getColumnCount(); i++)
-		    data[j-1][i-1] = res.getObject(i);
+	    if (res.next() == false){
+		 JOptionPane.showMessageDialog(null, "Le membre n'existe pas", "Erreur", JOptionPane.ERROR_MESSAGE);
+		 return;
+	    }
 		
-		j++;
-	    }
+	    Date dateEntree = (Date) res.getObject(1);
+	    Date dateSortie = (Date) res.getObject(2);
+	    Date dateActuelle = (Date) res.getObject(3);
+	    
+	    
 	    // test si la date de l'abondement n'est pas entre date entrée et date sortie
-	    if (( lowerThanDate((Date)data[0][2], (Date)data[0][0]) || lowerThanDate((Date)data[0][2],(Date)data[0][1]))){ // ERREUR : DAte sortie NULL
-		JOptionPane.showMessageDialog(null, "Mise a jour faite", "Validation", JOptionPane.ERROR_MESSAGE);
-		return;
-	    }
+
+	    if (dateSortie != null){
+		if  (lowerThanDate(dateSortie,dateActuelle) || ( lowerThanDate(dateActuelle, dateEntree) )){
+		    JOptionPane.showMessageDialog(null, "Le membre n'est plus dans la colocation", "Erreur", JOptionPane.ERROR_MESSAGE);
+		    return;
+		}}
+	    else 
+		if ( lowerThanDate(dateActuelle, dateEntree)){ // ERREUR : DAte sortie NULL
+		    JOptionPane.showMessageDialog(null, "Le membre n'est plus dans la colocation", "Erreur", JOptionPane.ERROR_MESSAGE);
+		    return;
+		}
 	    
 	    query ="select A_UNE_CAGNOTTE from COLOCATION, CONTRAT_MEMBRE where CONTRAT_MEMBRE.ID_COLOCATION = COLOCATION.ID_COLOCATION and CONTRAT_MEMBRE.ID_CONTRAT_MEMBRE = ?";
 	    
@@ -361,19 +361,19 @@ public class Window extends JFrame {
 	
 	    pstmt.setObject(1, value);
 	
-	    res = pstmt.executeQuery(query);
+	    res = pstmt.executeQuery();
 
 	    meta = res.getMetaData();
 
 	    
 	    //Petite manipulation pour obtenir le nombre de lignes
 	    res.last();
-	    rowCount = res.getRow();
+	    int rowCount = res.getRow();
 	    Object[][] data2 = new Object[res.getRow()][meta.getColumnCount()];
 
 	    //On revient au départ
 	    res.beforeFirst();
-	    j = 1;
+	    int j = 1;
 
 	    //On remplit le tableau d'Object[][]
 	    while(res.next()){
@@ -383,19 +383,20 @@ public class Window extends JFrame {
 		j++;
 	    }
 	    // Test si la colocation a laquelle il appartient a un abondement
-	    if ( (char)data2[0][0] == 'Y'){
+	    if ( ((String)data2[0][0]).compareTo("Y") != 0){
 		JOptionPane.showMessageDialog(null, "La colocation n'a pas de cagnotte", "Erreur", JOptionPane.ERROR_MESSAGE);
 		return;
 	    }
 
-	    query = "insert into ABONDEMENT values (seq_abondement.nextval, sysdate, ? ,"+ value+ " )";
+	    query = "insert into ABONDEMENT values (seq_abondement.nextval, sysdate, ? , ? )";
 
 	    
 	    String[] field2 ={"Valeur de l'abondement"};
-	    Object param[] = new Object[1];
+	    Object param[] = new Object[2];
 	    dQ= new DialogQuery(null, "Veuillez entrer les parametres", true, field2);
-	    param[0] = dQ.getValue();
-	    updateQuery(query, param, 1);
+	    param[0] = dQ.getValue()[0];
+	    param[1] = value;
+	    updateQuery(query, param, 2);
 	    
 	} catch (SQLException e) {
 	    //Dans le cas d'une exception, on affiche une pop-up et on efface le contenu		
