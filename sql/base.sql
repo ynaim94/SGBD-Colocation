@@ -254,9 +254,17 @@ select ID_CONTRAT_MEMBRE, ID_PERSONNE, ID_COLOCATION, DATE_ENTREE, DATE_SORTIE
 from PERSONNE inner join CONTRAT_MEMBRE using (ID_PERSONNE);
 
 drop view nbr_personne_achat cascade constraints;
-create view nbr_personne_achat (ID_ACHAT, NOMBRE_DE_PERSONNE) as
-select ID_ACHAT_PERSONNEL, count(ID_PERSONNE)
+create view nbr_personne_achat (ID_ACHAT, NOMBRE_DE_PERSONNE, CONCERNE) as
+select ID_ACHAT_PERSONNEL, count(ID_PERSONNE), 'P' as CONCERNE
 from (select ID_ACHAT_PERSONNEL, ID_PERSONNE
      from ACHAT_PERSONNEL left join (perso_contrat inner join BENEFICIAIRE using (ID_CONTRAT_MEMBRE)) using (ID_ACHAT_PERSONNEL)
      group by ID_ACHAT_PERSONNEL, ID_PERSONNE)
-group by ID_ACHAT_PERSONNEL;
+group by ID_ACHAT_PERSONNEL
+union
+select ID_ACHAT_COLOCATION, count(ID_PERSONNE), 'C' as CONCERNE
+from (select ID_ACHAT_COLOCATION, perso_contrat.ID_PERSONNE
+     from ACHAT_COLOCATION, COLOCATION, perso_contrat
+     where ACHAT_COLOCATION.ID_COLOCATION = COLOCATION.ID_COLOCATION
+     and COLOCATION.ID_COLOCATION = perso_contrat.ID_COLOCATION
+     group by ID_ACHAT_COLOCATION, perso_contrat.ID_PERSONNE)
+group by ID_ACHAT_COLOCATION;

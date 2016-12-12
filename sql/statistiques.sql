@@ -24,10 +24,15 @@ group by (ID_COLOCATION, NOM_COLOCATION);
 
 -- Pour chaque achat, le nombre de personne concernées
 
-select * from nbr_personne_achat
-where ID_ACHAT = 1;
-select * from nbr_personne_achat
-where ID_ACHAT = 2;
+select ID_ACHAT, NOMBRE_DE_PERSONNE from nbr_personne_achat
+where ID_ACHAT = 1
+and CONCERNE = 'P';
+select ID_ACHAT, NOMBRE_DE_PERSONNE from nbr_personne_achat
+where ID_ACHAT = 2
+and CONCERNE = 'P';
+select ID_ACHAT, NOMBRE_DE_PERSONNE from nbr_personne_achat
+where ID_ACHAT = 1
+and CONCERNE = 'C';
 
 -- Pour une personne donnée, la liste des débit et des crédits avec leur montant. une personne a un crédit si elle effectue un achat ou verse de l'argent à une autre personne ou à une cagnotte. Elle a un debit si elle recoit de l'argent ou si elle est concernée par un achat ( dans ce cas, le débit est égal au montant de l'achat divisé par le nombre de personne concernées)
 
@@ -51,10 +56,11 @@ from PERSONNE, CONTRAT_MEMBRE, ABONDEMENT
 where PERSONNE.ID_PERSONNE = CONTRAT_MEMBRE.ID_PERSONNE
 and CONTRAT_MEMBRE.ID_CONTRAT_MEMBRE = ABONDEMENT.ID_CONTRAT_MEMBRE
 union
-select PERSONNE.ID_PERSONNE, NOM_PERSONNE, MONTANT_VERSEMENT as MONTANT, 'VERSEMENT' as NATURE, 'DEBIT' as TOTO
+select PERSONNE.ID_PERSONNE, NOM_PERSONNE, MONTANT_VERSEMENT, 'VERSEMENT', 'DEBIT'
 from PERSONNE, CONTRAT_MEMBRE, VERSEMENT
 where PERSONNE.ID_PERSONNE = CONTRAT_MEMBRE.ID_PERSONNE
 and CONTRAT_MEMBRE.ID_CONTRAT_MEMBRE = VERSEMENT.ID_CONTRAT_MEMBRE_RECEVEUR;
+
 
 
 
