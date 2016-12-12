@@ -34,6 +34,7 @@ commit ;
 
 insert into COLOCATION values (  1  , '63 rue des Coudriers'	  ,  'A'  ,  'Y' ,  3  ) ;
 insert into COLOCATION values (  2  , '15 Place du Jeu de Paume'  ,  'B'  ,  'Y' ,  5  ) ;
+insert into COLOCATION values (  3  , '16 Place du Jeu de Paume'  ,  'C'  ,  'N' ,  5  ) ;
 
 commit ;
 
