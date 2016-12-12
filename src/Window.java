@@ -7,6 +7,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
+import java.sql.Date;
 
 
 import javax.swing.ImageIcon;
@@ -41,7 +42,8 @@ public class Window extends JFrame {
 
     private String[] queryMaj =  {"Ajouter une personne",
 				  "Ajouter une colocation",
-				  "Ajouter un membre a une colocation"};
+				  "Ajouter un personne a une colocation",
+				  "Ajouter un abondement"};
 
     private String[] queryGest ={};
 
@@ -117,8 +119,11 @@ public class Window extends JFrame {
 	run.setBorder(null);
 	run.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent event){
+		    if (combo.getSelectedItem() == queryMaj[3]){
+			updateQuery3();
+			return;
+		    }
 		    String query = QuerySelected(combo.getSelectedItem());
-		    //		    int 
 		    int number = numberParameter(query);
 		    if ( number  == 0)
 			initTable(query);
@@ -248,7 +253,159 @@ public class Window extends JFrame {
 	    JOptionPane.showMessageDialog(null, e.getMessage(), "ERREUR ! ", JOptionPane.ERROR_MESSAGE);
 	}
     }
+
+
+    public boolean lowerThanDate (Date date1, Date date2){
+
+	String d1Inter = date1.toString();
+	String d2Inter = date2.toString();
+
+	char[] d1 = d1Inter.toCharArray();
+	char[] d2 = d2Inter.toCharArray();
+	//Format yyyy-mm-dd
+
+	char[] year1 = new char[4];
+	char[] year2 = new char[4];
+
+	for (int i = 0 ; i < 4; i++){
+	    year1[i] = d1[i];
+	}
+
+	for (int i = 0 ; i < 4; i++){
+	    year2[i] = d2[i];
+	}
+
+	if ( Integer.parseInt( new String(year1)) < Integer.parseInt(new String(year2) ) )
+	    return true;
+	else if (Integer.parseInt (new String(year1))  == Integer.parseInt(new String(year2))){
+	    char[] month1 = new char[2];
+	    char[] month2 = new char[2];
+
+	    for (int i = 0 ; i < 2; i++){
+		month1[i] = d1[i];
+	    }
 	    
+	    for (int i = 0 ; i < 2; i++){
+		month2[i] = d2[i];
+	    }
+
+	    if ( Integer.parseInt(new String(month1) ) < Integer.parseInt(new String(month2)))
+		return true;
+	    else if ( Integer.parseInt (new String(month1) ) == Integer.parseInt(new String(month2))){
+		char[] day1 = new char[2];
+		char[] day2 = new char[2];
+
+		for (int i = 0 ; i < 2; i++){
+		    day1[i] = d1[i];
+		}
+	    
+		for (int i = 0 ; i < 2; i++){
+		    day2[i] = d2[i];
+		}
+
+		if ( Integer.parseInt(new String(day1) ) <= Integer.parseInt(new String(day2)))
+		    return true;
+		
+		
+	    }
+	}
+    
+	return false;
+    }
+    
+    public void updateQuery3(){
+
+	
+
+	try {
+	    String query ="select DATE_ENTREE, DATE_SORTIE, sysdate from CONTRAT_MEMBRE  where ID_CONTRAT_MEMBRE = ?";
+	    
+	    PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	
+	    String[] field = {"Identifiant du membre(contrat membre)"};
+	    DialogQuery dQ= new DialogQuery(null, "Veuillez entrer les parametres", true, field);
+	    Object value = dQ.getValue()[0];
+
+	    pstmt.setObject(1, value);
+	
+	    ResultSet res = pstmt.executeQuery();
+
+	    ResultSetMetaData meta = res.getMetaData();
+	    
+	    
+	    //Petite manipulation pour obtenir le nombre de lignes
+	    res.last();
+	    int rowCount = res.getRow();
+	    Object[][] data = new Object[res.getRow()][meta.getColumnCount()];
+
+	    //On revient au départ
+	    res.beforeFirst();
+	    int j = 1;
+
+	    //On remplit le tableau d'Object[][]
+	    while(res.next()){
+		for(int i = 1 ; i <= meta.getColumnCount(); i++)
+		    data[j-1][i-1] = res.getObject(i);
+		
+		j++;
+	    }
+	    // test si la date de l'abondement n'est pas entre date entrée et date sortie
+	    if (( lowerThanDate((Date)data[0][2], (Date)data[0][0]) || lowerThanDate((Date)data[0][2],(Date)data[0][1]))){ // ERREUR : DAte sortie NULL
+		JOptionPane.showMessageDialog(null, "Mise a jour faite", "Validation", JOptionPane.ERROR_MESSAGE);
+		return;
+	    }
+	    
+	    query ="select A_UNE_CAGNOTTE from COLOCATION, CONTRAT_MEMBRE where CONTRAT_MEMBRE.ID_COLOCATION = COLOCATION.ID_COLOCATION and CONTRAT_MEMBRE.ID_CONTRAT_MEMBRE = ?";
+	    
+	    pstmt = DBConnection.getInstance().prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	
+	    pstmt.setObject(1, value);
+	
+	    res = pstmt.executeQuery(query);
+
+	    meta = res.getMetaData();
+
+	    
+	    //Petite manipulation pour obtenir le nombre de lignes
+	    res.last();
+	    rowCount = res.getRow();
+	    Object[][] data2 = new Object[res.getRow()][meta.getColumnCount()];
+
+	    //On revient au départ
+	    res.beforeFirst();
+	    j = 1;
+
+	    //On remplit le tableau d'Object[][]
+	    while(res.next()){
+		for(int i = 1 ; i <= meta.getColumnCount(); i++)
+		    data2[j-1][i-1] = res.getObject(i);
+	    
+		j++;
+	    }
+	    // Test si la colocation a laquelle il appartient a un abondement
+	    if ( (char)data2[0][0] == 'Y'){
+		JOptionPane.showMessageDialog(null, "La colocation n'a pas de cagnotte", "Erreur", JOptionPane.ERROR_MESSAGE);
+		return;
+	    }
+
+	    query = "insert into ABONDEMENT values (seq_abondement.nextval, sysdate, ? ,"+ value+ " )";
+
+	    
+	    String[] field2 ={"Valeur de l'abondement"};
+	    Object param[] = new Object[1];
+	    dQ= new DialogQuery(null, "Veuillez entrer les parametres", true, field2);
+	    param[0] = dQ.getValue();
+	    updateQuery(query, param, 1);
+	    
+	} catch (SQLException e) {
+	    //Dans le cas d'une exception, on affiche une pop-up et on efface le contenu		
+	    JOptionPane.showMessageDialog(null, e.getMessage(), "ERREUR ! ", JOptionPane.ERROR_MESSAGE);
+	}
+	
+	
+					    
+    }
+
 
     public void displayQuery(ResultSet res) throws SQLException{
 	
@@ -276,8 +433,7 @@ public class Window extends JFrame {
 				
 	    j++;
 	}
-
-
+	
 
 	//On enlève le contenu de notre conteneur
 	result.removeAll();
@@ -371,10 +527,7 @@ public class Window extends JFrame {
 	
 
 
-    /**
-     * Point de départ du programme
-     * @param args
-     */
+ 
     public static void main(String[] args){
 
 	String[] profilArray = {"Gestionnaire","Membre"};

@@ -63,7 +63,7 @@ values (seq_colocation.nextval, 'UN AUTRE INTITULE', '16-JAN-2016', 500, 1, null
 
 --------------------------------------------------------------------------------
 --ajouté un versement
-select DATE_ENTREE, DATE_SORTIE
+select DATE_ENTREE, DATE_SORTIE, sysdate
 from CONTRAT_MEMBRE
 where ID_CONTRAT_MEMBRE = 5;
 
