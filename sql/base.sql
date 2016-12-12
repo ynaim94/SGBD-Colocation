@@ -230,3 +230,13 @@ begin
 end;
 /
 show error trigger ins_contrat_membre;
+
+-- ============================================================
+--   Vue pour les requête de statictique
+-- ============================================================
+
+drop view nbr_personne_achat cascade constraints;
+create view nbr_personne_achat (ID_ACHAT, NOMBRE_DE_PERSONNE) as
+select ID_ACHAT_PERSONNEL, count(BENEFICIAIRE.ID_CONTRAT_MEMBRE)
+from ACHAT_PERSONNEL left join BENEFICIAIRE using (ID_ACHAT_PERSONNEL)
+group by ID_ACHAT_PERSONNEL;
