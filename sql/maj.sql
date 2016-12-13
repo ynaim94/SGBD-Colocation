@@ -24,16 +24,19 @@ select * from CONTRAT_MEMBRE;
 
 --------------------------------------------------------------------------------
 -- ajouté abondement
-select DATE_ENTREE, DATE_SORTIE
+
+select ID_CONTRAT_MEMBRE
 from CONTRAT_MEMBRE
-where ID_CONTRAT_MEMBRE = 5;
+where ID_CONTRAT_MEMBRE = ? and
+((DATE_ENTREE <= ? and DATE_SORTIE is null) or (DATE_ENTREE <= ? and DATE_SORTIE >= ?))
 
 --l'application vérifie que la date de l'abondement est comprit entre les deux dates
+--en comptant le nombre de row
 
 select A_UNE_CAGNOTTE
 from COLOCATION, CONTRAT_MEMBRE
 where CONTRAT_MEMBRE.ID_COLOCATION = COLOCATION.ID_COLOCATION
-and CONTRAT_MEMBRE.ID_CONTRAT_MEMBRE = 5;
+and CONTRAT_MEMBRE.ID_CONTRAT_MEMBRE = ?;
 
 --l'application vérifie que a_une_cagnotte = Y
 
@@ -41,13 +44,13 @@ insert into ABONDEMENT
 values (seq_abondement.nextval, '01-JAN-2016', 500, 5);
 
 --------------------------------------------------------------------------------
---ajouté un achat colocation
-select DATE_ENTREE, DATE_SORTIE
+-select ID_CONTRAT_MEMBRE
 from CONTRAT_MEMBRE
-where ID_CONTRAT_MEMBRE = 3;
+where ID_CONTRAT_MEMBRE = ? and
+((DATE_ENTREE <= ? and DATE_SORTIE is null) or (DATE_ENTREE <= ? and DATE_SORTIE >= ?))
 
---l'application vérifie que la date de l'achat est comprit entre les deux dates
-
+--l'application vérifie que la date de l'abondement est comprit entre les deux dates
+--en comptant le nombre de row
 insert into ACHAT_COLOCATION
 values (seq_colocation.nextval, 'INTITULE', '01-JAN-2016', 500, 2, 3);
 
@@ -62,12 +65,13 @@ insert into ACHAT_COLOCATION
 values (seq_colocation.nextval, 'UN AUTRE INTITULE', '16-JAN-2016', 500, 1, null);
 
 --------------------------------------------------------------------------------
---ajouté un versement
-select DATE_ENTREE, DATE_SORTIE
+select ID_CONTRAT_MEMBRE
 from CONTRAT_MEMBRE
-where ID_CONTRAT_MEMBRE = 5;
+where ID_CONTRAT_MEMBRE = ? and
+((DATE_ENTREE <= ? and DATE_SORTIE is null) or (DATE_ENTREE <= ? and DATE_SORTIE >= ?))
 
---l'application vérifie que la date du versement est comprit entre les deux dates
+--l'application vérifie que la date de l'abondement est comprit entre les deux dates
+--en comptant le nombre de row
 
 select DATE_ENTREE, DATE_SORTIE
 from CONTRAT_MEMBRE
