@@ -44,7 +44,7 @@ where ID_PERSONNE = 2;
 
 
 -- Pour une colocation, la liste de ses membre avec leur solde.
-
+/*
 select ID_PERSONNE, NOM_PERSONNE, MONTANT
 from (select ID_ACHAT_COLOCATION, perso_contrat.ID_PERSONNE
      from ACHAT_COLOCATION, COLOCATION, perso_contrat
@@ -59,3 +59,4 @@ select ID_ACHAT_COLOCATION, perso_contrat.ID_PERSONNE
      where ACHAT_COLOCATION.ID_COLOCATION = COLOCATION.ID_COLOCATION
      and COLOCATION.ID_COLOCATION = perso_contrat.ID_COLOCATION
      group by ID_ACHAT_COLOCATION, perso_contrat.ID_PERSONNE;
+*/
