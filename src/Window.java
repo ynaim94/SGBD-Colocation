@@ -35,7 +35,10 @@ public class Window extends JFrame {
 					 "Liste des achats effectués par une colocation et pour un mois donné",
 					 "Liste des colocations pour lesquels aucun achat n'a été enregistré au cous des 6 derniers mois"};
     
-    private String[] queryStat ={"Liste des colocations avec le nombre de leurs membres à une date donnée"};
+    private String[] queryStat ={"Liste des colocations avec le nombre de leurs membres à une date donnée",
+				 "Pour chaque achat, le nombre de personnes concernées",
+				 "Pour une personne donnée , la liste des débit et crédit",
+				 "Pour une colocation, la liste de ses membres avec leur solde"};
 				 
 				 
 
@@ -45,6 +48,7 @@ public class Window extends JFrame {
 				  "Ajouter un abondement",
 				  "Ajouter un achat colocation",
 				  "Ajouter un versement"};
+				  
 
     private String[] queryGest = queryMaj;
 
@@ -80,7 +84,8 @@ public class Window extends JFrame {
 	initContent();
     }
 	
-   
+
+    //Méthode permettant d'initiliser la barre d'outils
     private void initToolbar(){
 
 	combo.addItem("Selectionner une requete");
@@ -157,7 +162,9 @@ public class Window extends JFrame {
 	
 	
     }
-    
+
+
+    // Méthode permettant de calculer de nombre de "?" dans une requête, pour connaitre le nombre de paramètre
     public int numberParameter(String query){
 	int n = 0;
 	for (int i = 0; i < query.length(); i++){
@@ -167,7 +174,7 @@ public class Window extends JFrame {
 	return n;
     }
     
-    
+    // Méthode permettant d'initialiser le contenu de la fenêtre
     public void initContent(){
 	//Vous connaissez ça...
 	result.setLayout(new BorderLayout());
@@ -179,7 +186,8 @@ public class Window extends JFrame {
 
 
 
-    
+    // Méthode permettant d'initialiser une table, en appelant les méthode d'exécution de requete de JDBC et d'affichage.
+    // Param : query une requête non paramétrée.
     public void initTable(String query){
 	try {
 	    //On crée un statement
@@ -205,6 +213,9 @@ public class Window extends JFrame {
 
     
 
+    //Surcharge de la méthode initTable(String), elle prend en paramètre une requête paramétrée ainsi q'un tableau des valeurs entrées par l'utilisateur
+    //Param: param un tableau d'objet contenant les valeur a mettre dans l'instance de PreparedStatement.
+    //param: length la taille du tableau
     public void initTable(String query, Object[] param, int length ){
 	try {
 	    //On crée un statement
@@ -231,7 +242,8 @@ public class Window extends JFrame {
 	}	
     }
 
-    
+
+    //Permet d'éxécuter une requête d'insertion ( donc ne demande aucun appel a une fonction d'affichage, mais demande en contrepartie la validation de la requête)
     public void updateQuery(String query, Object[] param, int length){
 	try {
 	    //On crée un statement
@@ -259,12 +271,10 @@ public class Window extends JFrame {
        
    
     
-    //Methode pour evaluer sur la date est entre date entrée et date sortie pour un membre d'une colocation
-    
+    //Methode donnant la main a l'utilisateur pour entrer une date et un identifiant membre, puis evalue si la date en paramètre est entre date entrée et date sortie pour un membre d'une colocation
+    //Principe : Si elle ne trouve aucun row , c'est que le membre n'existe pas à cette date. (pas encore entrée, est déjà sortie)
+    //query : requete pour trouver si un identifiant existe entre 2 date
     public Object[] validDate(String query) throws SQLException{
-	
-	    
-	
 	PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 	
 	String[] field = {"Identifiant du membre", "Date de l'operation(jj-mmm-aaaa)"};
@@ -302,25 +312,6 @@ public class Window extends JFrame {
 	Object[] obj ={idMembre,dateVersement};
 	return obj;
 		
-	/*	Date dateEntree = (Date) res.getObject(1);
-	Date dateSortie = (Date) res.getObject(2);
-	//Date dateActuelle = (Date) res.getObject(3);
-	    
-	    
-	// test si la date de l'abondement n'est pas entre date entrée et date sortie
-
-	if (dateSortie != null){
-	    if  (lowerThanDate(dateSortie,dateActuelle) || ( lowerThanDate(dateActuelle, dateEntree) )){
-		JOptionPane.showMessageDialog(null, "Le membre n'est plus dans la colocation", "Erreur", JOptionPane.ERROR_MESSAGE);
-		return -1;
-	    }}
-	else 
-	    if ( lowerThanDate(dateActuelle, dateEntree)){ // ERREUR : DAte sortie NULL
-		JOptionPane.showMessageDialog(null, "Le membre n'est plus dans la colocation", "Erreur", JOptionPane.ERROR_MESSAGE);
-		return -1;
-	    }
-
-	    return idMembre;*/
 
 	
 	
@@ -528,9 +519,9 @@ public class Window extends JFrame {
 	    Object idMembre =  value[0];
 	    Object dateVers = value[1];
 
-	    Object[] value2 = null;
+	    //Object[] value2 = null;
 
-	    String dateVersement = dateVers.toString();
+	    // String dateVersement = dateVers.toString();
 
 	    	    
 	    query ="select ID_CONTRAT_MEMBRE  from CONTRAT_MEMBRE  where ID_CONTRAT_MEMBRE = ? and ((DATE_ENTREE <= ? and DATE_SORTIE is null) or (DATE_ENTREE <= ? and DATE_SORTIE >= ?))" ;
@@ -575,7 +566,7 @@ public class Window extends JFrame {
 	    Object param[] = new Object[field2.length + 3];
 	    DialogQuery dQ= new DialogQuery(null, "Veuillez entrer les parametres", true, field2);
 
-	    param[0]= dateVersement;
+	    param[0]= dateVers;
 	    param[1] = dQ.getValue()[0];
 	    param[2] = idMembre;
 	    param[3] = idMembre2;
@@ -587,6 +578,8 @@ public class Window extends JFrame {
 	    JOptionPane.showMessageDialog(null, e.getMessage(), "ERREUR ! ", JOptionPane.ERROR_MESSAGE);
 	}
     }
+
+
     
     public void displayQuery(ResultSet res) throws SQLException{
 	
@@ -639,13 +632,20 @@ public class Window extends JFrame {
 	    return ScriptRunner.getQuery("../sql/consultations/listColocSixMois.sql");
 	if ( c == queryStat[0])
 	    return ScriptRunner.getQuery("../sql/stats/listColocNbrMemb.sql");
+	if ( c == queryStat[1])
+	    return  ScriptRunner.getQuery("../sql/stats/nbrPersAchat.sql");
+	if ( c == queryStat[2])
+	    return  ScriptRunner.getQuery("../sql/stats/persDebCred.sql");
+	if ( c == queryStat[3])
+	    return  ScriptRunner.getQuery("../sql/stats/colocMbrSold.sql");
 	if ( c == queryMaj[0])
 	    return ScriptRunner.getQuery("../sql/miseAJour/ajoutPers.sql");
 	if ( c == queryMaj[1])
 	    return ScriptRunner.getQuery("../sql/miseAJour/ajoutColoc.sql");
 	if ( c == queryMaj[2])
 	    return ScriptRunner.getQuery("../sql/miseAJour/ajoutMbr.sql");
-	    
+	
+	
 	return "";
     }
     
@@ -677,7 +677,14 @@ public class Window extends JFrame {
 	    
 	}
 		
+	if (q == queryStat[2]){
+	    String[] field = {"Id de la personne"};
+	    DialogQuery dQ= new DialogQuery(null, "Veuillez entrer les parametres", true, field);
+	    value[0] = dQ.getValue()[0];
+	  	    
+	}
 		
+
 	
 	 if (q == queryMaj[0]){
 	     String[] field = {"Nom","Prenom","Mail"};
