@@ -1,39 +1,20 @@
-//STEP 1. Import required packages
 import java.sql.*;
 
 public class CreateTables {
 
-    //    static QueryCreation create;
-    // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver"; 
-    static final String DB_URL = "jdbc:oracle:thin:@localhost:1521/XE";
-
-    //  Database credentials
-    static final String USER = "SYSTEM";
-    static final String PASS = "123456789";
-      
+    
     public static void main(String[] args) {
-	Connection conn = null;
+	Connection conn = DBConnection.getInstance();
 	Statement stmt = null;
 	
 	try{
-	    //STEP 2: Register JDBC driver
-	    Class.forName(JDBC_DRIVER);
-
-	    //STEP 3: Open a connection
-	    System.out.println("Connecting to a selected database...");
-	    conn = DriverManager.getConnection(DB_URL, USER, PASS);
-	    System.out.println("Connected database successfully...");
-      
-	    //STEP 4: Create a Statement
+	    //Create a Statement
 	    System.out.println("Creating table in given database...");
 	    stmt = conn.createStatement();
 	    
-	    //STEP5: Run the script to create Tables
+	    // Run the script to create Tables
 	    ScriptRunner.run(stmt,"../sql/base.sql");
 
-	    //TODO: Lire les requêtes de creation Trigger
-	    
 	    System.out.println("Created table in given database...");
 	}catch(SQLException se){
 	    //Handle errors for JDBC

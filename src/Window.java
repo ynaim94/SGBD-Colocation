@@ -46,11 +46,11 @@ public class Window extends JFrame {
 				  "Ajouter un achat colocation",
 				  "Ajouter un versement"};
 
-    private String[] queryGest ={};
+    private String[] queryGest = queryMaj;
 
-    private String[] queryMbrOpen = {};
+    private String[] queryMbrOpen = {queryMaj[4], queryMaj[5]};
     
-    private String[] queryMbrClosed = {};
+    private String[] queryMbrClosed ;;
     
     private JToolBar toolBar = new JToolBar();
 
@@ -74,7 +74,7 @@ public class Window extends JFrame {
 	setDefaultCloseOperation(EXIT_ON_CLOSE);
 	
 	profil = profilUser;
-	modeUser = mode;
+	mode = modeUser;
 	
 	initToolbar();
 	initContent();
@@ -92,12 +92,7 @@ public class Window extends JFrame {
 	    combo.addItem(queryStat[i]);
 	}
 
-	for (int i = 0; i < queryMaj.length; i++){ 
-	    combo.addItem(queryMaj[i]);
-	}
-	
-	
-	/*
+    	
 	if (profil == "Gestionnaire"){
 	    for (int i = 0; i< queryGest.length; i++){
 		combo.addItem(queryGest[i]);
@@ -105,16 +100,12 @@ public class Window extends JFrame {
 	}
 	else{
 	    if (mode == "Ouvert"){
-		for (int i = 0; i < queryGest.length; i++){
+		for (int i = 0; i < queryMbrOpen.length; i++){
 		    combo.addItem(queryMbrOpen[i]);
 		}
 	    }
-	    else {
-		for (int i = 0; i < queryGest.length; i++){
-		    combo.addItem(queryMbrClosed[i]);
-		}
-	    }
-	    }*/
+	    
+	}
 	    
 	run.setPreferredSize(new Dimension(30, 35));
 	run.setBorder(null);
@@ -723,7 +714,7 @@ public class Window extends JFrame {
     public static void main(String[] args){
 
 	String[] profilArray = {"Gestionnaire","Membre"};
-	String[] modeArray = {"Ouvert", "Fermé"};
+	String[] modeArray = {"Ouvert", "Ferme"};
 	JOptionPane jop = new JOptionPane(), jop2 = new JOptionPane();
 	String profil = (String)jop.showInputDialog(null, "Veuillez indiquer votre Profil !", "Profil",JOptionPane.QUESTION_MESSAGE,null,profilArray,profilArray[0]);
 	if (profil != null){
