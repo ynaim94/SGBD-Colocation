@@ -1,7 +1,5 @@
--- Liste des colocations avec leur gestionnaire (testé ok)
+-- Liste des colocations avec leur gestionnaire
 
-Select ID_COLOCATION ,NOM_COLOCATION AS COLOCATION,NOM_PERSONNE AS GESTIONNAIRE
+Select NOM_COLOCATION AS COLOCATION,NOM_PERSONNE AS GESTIONNAIRE
 from COLOCATION,PERSONNE
 where COLOCATION.ID_PERSONNE=PERSONNE.ID_PERSONNE;
-
-
