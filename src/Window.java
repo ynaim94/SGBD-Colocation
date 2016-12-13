@@ -265,8 +265,7 @@ public class Window extends JFrame {
     }
 
 
-    //Methode pour comparer les dates de java.sql.Date
-    
+       
    
     
     //Methode pour evaluer sur la date est entre date entrée et date sortie pour un membre d'une colocation
