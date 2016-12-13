@@ -2,10 +2,4 @@
 
 select ID_ACHAT, NOMBRE_DE_PERSONNE from nbr_personne_achat
 where ID_ACHAT = 1
-and CONCERNE = 'P';
-select ID_ACHAT, NOMBRE_DE_PERSONNE from nbr_personne_achat
-where ID_ACHAT = 2
-and CONCERNE = 'P';
-select ID_ACHAT, NOMBRE_DE_PERSONNE from nbr_personne_achat
-where ID_ACHAT = 1
-and CONCERNE = 'C';
+and CONCERNE = ?

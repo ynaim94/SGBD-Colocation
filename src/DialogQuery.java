@@ -27,7 +27,7 @@ class DialogQuery extends JDialog {
 
 	super(parent, title, modal);
 
-	this.setSize(550, 270);
+	this.setSize(600, 600);
 
 	this.setLocationRelativeTo(null);
 
@@ -50,7 +50,7 @@ class DialogQuery extends JDialog {
 	text = new JTextField[field.length];
 
 	JPanel content = new JPanel();
-
+	
 	JPanel[] pan = new JPanel[field.length];
 
 	for (int i = 0; i < field.length; i++){
@@ -61,7 +61,7 @@ class DialogQuery extends JDialog {
 	    
 	    //pan[i].setBackground(Color.white);
 
-	    pan[i].setPreferredSize(new Dimension(220, 60));
+	    pan[i].setPreferredSize(new Dimension(300, 60));
 
 	    text[i].setPreferredSize(new Dimension(100, 25));
 

@@ -25,6 +25,8 @@ values (seq_personne.nextval, 'NOM', 'PRENOM', 'MAIL');
 insert into COLOCATION
 values (seq_colocation.nextval, 'ADRESSE', 'NOM', 'Y', 42);
 
+
+
 --------------------------------------------------------------------------------
 -- ajouté une personne a une colocation (= crée un contrat member)
 -- soit la personne 42 et la colocation 666

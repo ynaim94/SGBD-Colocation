@@ -63,7 +63,7 @@ values (seq_colocation.nextval, 'UN AUTRE INTITULE', '16-JAN-2016', 500, 1, null
 
 --------------------------------------------------------------------------------
 --ajouté un versement
-select DATE_ENTREE, DATE_SORTIE, sysdate
+select DATE_ENTREE, DATE_SORTIE
 from CONTRAT_MEMBRE
 where ID_CONTRAT_MEMBRE = 5;
 
@@ -86,8 +86,8 @@ insert into VERSEMENT
 values (seq_versement.nextval, '03-DEC-2016', 500, 5, 4);
 
 --------------------------------------------------------------------------------
---ajouté un achat personnel
---3 achet pour 4 et 5*
+--ajouter un achat personnel
+--3 achats pour 4 et 5*
 
 select DATE_ENTREE, DATE_SORTIE
 from CONTRAT_MEMBRE
