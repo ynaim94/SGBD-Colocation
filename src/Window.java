@@ -505,6 +505,7 @@ public class Window extends JFrame {
 	
     }
 
+    // Correspond à l'éxécution de 5 requete de mise a jour
     public void updateQuery5(){
 	try{
 	    String query ="select ID_CONTRAT_MEMBRE  from CONTRAT_MEMBRE  where ID_CONTRAT_MEMBRE = ? and ((DATE_ENTREE <= ? and DATE_SORTIE is null) or (DATE_ENTREE <= ? and DATE_SORTIE >= ?)) ";
@@ -580,7 +581,9 @@ public class Window extends JFrame {
     }
 
 
-    
+
+    //Permer de générer l'affichage du résultat d'une requête
+    //param res retourné après l'éxécution d'une requête
     public void displayQuery(ResultSet res) throws SQLException{
 	
 	//On récupère les meta afin de récupérer le nom des colonnes
@@ -620,6 +623,8 @@ public class Window extends JFrame {
     }
 
 
+
+    // Permet de déterminer que query est sélectionné dans la liste déroulante pour aller chercher le fichier script sql correspondant
     private String QuerySelected (Object c){
 	
 	if ( c == queryConsultation[0])
@@ -648,7 +653,8 @@ public class Window extends JFrame {
 	
 	return "";
     }
-    
+
+    // Permet de générer une fenetre d'affichage pour une requête paramétrée et de retourner les valeurs entrées par l'utilisateur 
     private void displayPane( Object query, Object[] value){
 	String q = (String) query;
 	int n = 0;
